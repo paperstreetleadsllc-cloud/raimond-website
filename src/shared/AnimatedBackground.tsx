@@ -3,7 +3,6 @@ import React, { useEffect, useRef } from "react";
 const AnimatedBackground: React.FC = () => {
   const ref = useRef<HTMLDivElement>(null);
 
-  // Optional micro-parallax
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
