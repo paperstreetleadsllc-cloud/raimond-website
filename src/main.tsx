@@ -5,11 +5,15 @@ import "./index.css";
 import App from "./pages/App";
 import Home from "./pages/Home";
 import JournalPage from "./pages/Journal";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
 
 const router = createBrowserRouter([
   { path: "/", element: <App />, children: [
     { index: true, element: <Home /> },
     { path: "journal", element: <JournalPage /> },
+    { path: "privacy", element: <Privacy /> },
+    { path: "terms", element: <Terms /> },
   ]},
 ]);
 

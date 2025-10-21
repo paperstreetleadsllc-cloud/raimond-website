@@ -1,4 +1,4 @@
-async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+ï»¿async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
   e.preventDefault();
   const form = new FormData(e.currentTarget);
   const payload = {
@@ -12,7 +12,7 @@ async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     body: JSON.stringify(payload),
   });
   if (res.ok) {
-    alert("Thanks! We’ll be in touch.");
+    alert("Thanks! Weâ€™ll be in touch.");
     e.currentTarget.reset();
   } else {
     const data = await res.json().catch(() => ({}));
@@ -42,7 +42,7 @@ export default function Footer() {
           <p className="text-slate-400 mt-2">support@raimondai.com</p>
 
           <div className="mt-6 text-slate-400 text-sm">
-            <p>© {year} RAimond AI — RAi</p>
+            <p>Â© {year} RAimond AI â€” RAi</p>
           </div>
         </div>
       </div>
