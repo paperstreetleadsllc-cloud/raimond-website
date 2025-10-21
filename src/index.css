@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Reusable helpers */
+.glass { @apply bg-white/5 backdrop-blur-md border border-white/10 shadow-glass; }
+.link { @apply hover:underline underline-offset-4 decoration-slate-400; }
+.btn { @apply inline-flex items-center justify-center px-5 py-3 rounded-md font-semibold; }
+.btn-primary { @apply btn bg-brand-amber text-brand-night; }
+.btn-ghost { @apply btn border border-white/10; }
+.section { @apply max-w-7xl mx-auto px-6; }
