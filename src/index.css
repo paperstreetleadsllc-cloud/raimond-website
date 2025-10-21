@@ -1,3 +1,13 @@
+/* ---------- Fonts ---------- */
+@import "@fontsource-variable/inter/index.css";
+@import "@fontsource/space-grotesk/400.css";
+@import "@fontsource/space-grotesk/500.css";
+@import "@fontsource/space-grotesk/600.css";
+
+:root {
+  font-optical-sizing: auto;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -9,3 +19,7 @@
 .btn-primary { @apply btn bg-brand-amber text-brand-night; }
 .btn-ghost { @apply btn border border-white/10; }
 .section { @apply max-w-7xl mx-auto px-6; }
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
