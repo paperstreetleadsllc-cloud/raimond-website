@@ -11,11 +11,11 @@ export default function Hero(){
         {/* Copy column */}
         <div className="col-span-12 lg:col-span-6">
           <div className="chip mb-5"><span className="chip-dot" /> Adaptive Trading Assistant</div>
-          <h1 className="text-white font-display text-4xl md:text-6xl lg:text-7xl leading-tight max-w-3xl">
-  Meet <span className="text-[var(--accent)]">RAI</span>mond — your accountability co-pilot
+          <h1 className="text-white font-display text-4xl md:text-7xl lg:text-8xl leading-[0.95] max-w-3xl">
+  Meet <span className="text-[var(--accent)]">RAI</span>mond â€” your accountability co-pilot
 </h1>
           <p className="lede mt-5 max-w-[62ch]">
-            RAimond watches over your sessions like a desk coach—learning your patterns, 
+            RAimond watches over your sessions like a desk coachâ€”learning your patterns, 
             flagging over-confidence and revenge trades, reinforcing discipline, and giving timed reminders. 
             It finds inefficiencies and prescribes fixes, so you trade like the <em>house</em>, not the crowd.
           </p>
