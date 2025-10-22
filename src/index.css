@@ -6,11 +6,15 @@
 html, body, #root { height: 100%; }
 :root {
   --grid-size: 22px;
-  --text-hero: clamp(2.6rem, 4.2vw + 1rem, 4.6rem); /* ≈42–74px */
-  --text-lede: clamp(1rem, .45vw + .9rem, 1.25rem); /* ≈16–20px */
-  --text-body: 1rem;                                  /* 16px */
+  --text-hero: clamp(2.6rem, 4.2vw + 1rem, 4.6rem);
+  --text-lede: clamp(1rem, .45vw + .9rem, 1.25rem);
+  --text-body: 1rem;
   --lh-tight: 1.05;
   --lh-comfy: 1.6;
+
+  /* NEW: teal accent (Raen-ish) */
+  --accent: #20E0C0;           /* primary */
+  --accent-weak: #13BFA4;      /* hover/depth */
 }
 
 body {
@@ -23,7 +27,7 @@ body {
 
 .section { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
-/* ---------- Grid overlay (subtle) ---------- */
+/* ---------- Grid overlay ---------- */
 .bg-grid::before {
   content: "";
   position: absolute; inset: 0;
@@ -36,11 +40,11 @@ body {
   pointer-events: none;
 }
 
-/* ---------- Display / lede / eyebrow / nav ---------- */
+/* ---------- Type scales ---------- */
 .h1-hero {
   font-family: "Space Grotesk", InterVariable, system-ui, sans-serif;
   font-weight: 600;
-  letter-spacing: -0.015em;        /* Raen-like tightness */
+  letter-spacing: -0.015em;
   line-height: var(--lh-tight);
   font-size: var(--text-hero);
   color: #fff;
@@ -57,8 +61,20 @@ body {
   text-transform: uppercase;
   color: #7C8A9C;
 }
+
+/* ---------- Nav + accent links ---------- */
 .nav-link { font-size: .9rem; color: #B9C6D6; }
 .nav-link:hover { color: #E2E8F0; }
+
+.link-accent {
+  position: relative; color: var(--accent);
+}
+.link-accent::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--accent) 30%, var(--accent-weak) 70%, transparent 100%);
+  opacity: .6; transition: opacity .2s ease;
+}
+.link-accent:hover::after { opacity: 1; }
 
 /* ---------- Buttons ---------- */
 .btn { @apply inline-flex items-center justify-center rounded-md font-medium transition; }
@@ -74,4 +90,10 @@ body {
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   box-shadow: 0 26px 90px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.06);
+}
+
+/* NEW: tiny teal “pins” for depth (optional) */
+.pin {
+  width: 2px; height: 12px; background: linear-gradient(180deg, var(--accent), transparent);
+  opacity: .5;
 }

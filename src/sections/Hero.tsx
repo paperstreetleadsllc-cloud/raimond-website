@@ -1,7 +1,10 @@
-﻿import React from "react";
+﻿import React, { useState } from "react";
 import AnimatedBackground from "../shared/AnimatedBackground";
+import BetaModal from "../shared/BetaModal";
 
 export default function Hero() {
+  const [open, setOpen] = useState(false);
+
   return (
     <section className="relative min-h-[82vh] flex items-center bg-hero-gradient overflow-hidden">
       <div className="absolute inset-0 bg-grid" />
@@ -21,7 +24,9 @@ export default function Hero() {
 
           <div className="mt-8 flex flex-wrap gap-3">
             <a className="btn btn-lg btn-amber">See RAi Features</a>
-            <a className="btn btn-lg btn-ghost">Join the beta</a>
+            <button className="btn btn-lg btn-ghost" onClick={()=>setOpen(true)}>
+              Join the beta
+            </button>
           </div>
         </div>
 
@@ -29,6 +34,8 @@ export default function Hero() {
           <div className="hud-card w-full max-w-[560px] h-[420px] md:h-[480px] lg:h-[520px]" />
         </div>
       </div>
+
+      <BetaModal open={open} onClose={()=>setOpen(false)} />
     </section>
   );
 }
