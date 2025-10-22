@@ -6,11 +6,11 @@ export default {
     container: { center: true, padding: "1rem" },
     extend: {
       colors: {
-        brand: { amber: "#FFB020", night: "#0A0F1C", ink: "#0C1426" },
+        brand: { amber: "#FFB020", night: "#090F1B", ink: "#0C1426" },
       },
       backgroundImage: {
         "hero-gradient":
-          "radial-gradient(1200px 600px at 85% 20%, rgba(8,16,33,0.45) 0%, rgba(8,16,33,0) 60%), linear-gradient(180deg, #070C18 0%, #0B152C 55%, #0E1727 100%)",
+          "radial-gradient(1200px 600px at 85% 20%, rgba(8,16,33,0.45) 0%, rgba(8,16,33,0) 60%), linear-gradient(180deg, #070C18 0%, #0A1426 55%, #0E1727 100%)",
       },
       boxShadow: {
         glass: "0 20px 60px rgba(0,0,0,0.55)",
