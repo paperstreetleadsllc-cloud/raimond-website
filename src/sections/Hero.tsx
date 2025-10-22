@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+﻿import { motion } from "framer-motion";
 import hud from "../assets/hud-mockup.png";
 import AnimatedBackground from "../shared/AnimatedBackground";
 
@@ -12,21 +12,21 @@ export default function Hero() {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
             <h1 className="font-display text-4xl md:text-5xl font-extrabold leading-tight">
-              RAimond — RAi: your AI trading partner
+              RAimond â€” RAi: your AI trading partner
             </h1>
             <p className="mt-6 text-lg text-slate-300 max-w-xl">
               Institutional-grade infrastructure and an AI assistant that enforces discipline, logs trades,
-              and gives real-time voice & HUD coaching — built for serious traders who want consistency.
+              and gives real-time voice & HUD coaching â€” built for serious traders who want consistency.
             </p>
             <div className="mt-8 flex gap-4">
               <a href="#product" className="btn-primary">See RAi Features</a>
               <a href="#careers" className="btn-ghost">Join the beta</a>
             </div>
             <ul className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-slate-300/80">
-              <li>• Real-time trade monitoring & voice overlays</li>
-              <li>• Discipline lockouts & daily reviews</li>
-              <li>• Integrations: Topstep, Sierra Chart, Bookmap</li>
-              <li>• Trade journaling + analytics</li>
+              <li>â€¢ Real-time trade monitoring & voice overlays</li>
+              <li>â€¢ Discipline lockouts & daily reviews</li>
+              <li>â€¢ Integrations: Topstep, Sierra Chart, Bookmap</li>
+              <li>â€¢ Trade journaling + analytics</li>
             </ul>
           </div>
 
@@ -42,7 +42,7 @@ export default function Hero() {
               />
             </div>
             <p className="text-xs text-slate-400 mt-3">
-              HUD preview — customizable voice, overlays, and real-time reminders.
+              HUD preview â€” customizable voice, overlays, and real-time reminders.
             </p>
           </div>
         </div>
