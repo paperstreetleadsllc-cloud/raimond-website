@@ -1,4 +1,9 @@
-﻿/* --- Fonts --------------------------------------------------------------- */
+﻿/* Tailwind core (must be first) */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Fonts */
 @import "@fontsource-variable/inter/index.css";
 @import "@fontsource/space-grotesk/400.css";
 @import "@fontsource/space-grotesk/500.css";
@@ -7,19 +12,17 @@
 /* Optional: optical sizing for Inter Variable */
 :root { font-optical-sizing: auto; }
 
-/* --- Base ---------------------------------------------------------------- */
+/* Layout/base */
 html, body, #root { height: 100%; }
-body {
-  @apply bg-[#060b22] text-slate-100 antialiased font-sans;
-}
+body { @apply bg-[#060b22] text-slate-100 antialiased font-sans; }
 
 /* Headings use Space Grotesk */
 .h1, h1, .h2, h2, .h3, h3 { @apply font-display tracking-tight; }
 
-/* Link style */
+/* Links */
 .link { @apply text-amber-400 hover:text-amber-300 transition-colors; }
 
-/* --- Animated background ------------------------------------------------- */
+/* Animated background */
 @keyframes bg-pan {
   0%   { transform: translate3d(0,0,0) scale(1); }
   50%  { transform: translate3d(-3%,1%,0) scale(1.02); }
@@ -27,7 +30,7 @@ body {
 }
 .animate-bg { animation: bg-pan 18s ease-in-out infinite; will-change: transform; }
 
-/* ultra-light noise (SVG data URI) */
+/* ultra-light noise */
 .noise {
   background-image: url("data:image/svg+xml;utf8,\
   <svg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'>\
