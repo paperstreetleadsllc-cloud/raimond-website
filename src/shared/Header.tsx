@@ -1,1 +1,45 @@
-﻿import { useState } from "react";import { Menu } from "lucide-react";export default function Header() {  const [open, setOpen] = useState(false);  return (    <header className="fixed inset-x-0 top-0 z-40">      <div className="section py-4 flex items-center justify-between">        <a href="#" className="flex items-center gap-3">          <div className="w-10 h-10 rounded-md bg-gradient-to-r from-amber-400 to-amber-600 grid place-items-center font-bold text-brand-night">RAi</div>          <div className="text-white font-semibold">RAimond</div>        </a>        <nav className="hidden md:flex items-center gap-6 text-sm">          <a className="link" href="#what">What We Do</a>          <a className="link" href="#product">Product</a>          <a className="link" href="#careers">Careers</a>          <a className="link" href="/journal">Journal</a>          <a className="btn-primary" href="#contact">Get Started</a>        </nav>        <button aria-label="Open Menu" className="md:hidden p-2 glass rounded-md" onClick={() => setOpen(v => !v)}>          <Menu className="h-6 w-6" />        </button>      </div>      {open && (        <div className="md:hidden section pb-4">          <div className="glass rounded-lg p-4 flex flex-col gap-3">            <a onClick={() => setOpen(false)} href="#what">What We Do</a>            <a onClick={() => setOpen(false)} href="#product">Product</a>            <a onClick={() => setOpen(false)} href="#careers">Careers</a>            <a onClick={() => setOpen(false)} href="/journal">Journal</a>            <a onClick={() => setOpen(false)} className="btn-primary text-center" href="#contact">Get Started</a>          </div>        </div>      )}    </header>  );}
+﻿import React from "react";
+import { NavLink } from "react-router-dom";
+import LogoWord from "../brand/LogoWord";
+
+const linkBase =
+  "relative px-3 py-2 text-sm text-slate-300 hover:text-white transition";
+const activeUnderline =
+  "after:absolute after:left-3 after:right-3 after:-bottom-[2px] after:h-[2px] after:bg-[var(--accent)] after:rounded after:shadow-[0_0_12px_rgba(25,224,200,.6)]";
+
+export default function Header(){
+  const items = [
+    { to: "/", label: "What We Do" },
+    { to: "/#features", label: "Product" },
+    { to: "/journal", label: "Journal" },
+  ];
+
+  return (
+    <header className="sticky top-0 z-40">
+      <div className="backdrop-blur-md bg-[rgba(5,10,20,.55)] border-b border-white/10">
+        <nav className="container h-14 flex items-center justify-between">
+          <LogoWord />
+          <div className="flex items-center gap-1">
+            {items.map(it => (
+              <NavLink
+                key={it.label}
+                to={it.to}
+                className={({isActive}) =>
+                  `${linkBase} ${isActive ? activeUnderline : ""}`
+                }
+              >
+                {it.label}
+              </NavLink>
+            ))}
+            <a
+              href="mailto:support@raimondai.com?subject=Get%20Started"
+              className="ml-2 btn btn-accent btn-lg h-9 px-4"
+            >
+              Get Started
+            </a>
+          </div>
+        </nav>
+      </div>
+    </header>
+  );
+}

@@ -1,14 +1,13 @@
-﻿import { Outlet } from "react-router-dom";
+﻿import React from "react";
+import { Outlet } from "react-router-dom";
 import Header from "../shared/Header";
 import Footer from "../shared/Footer";
-import AnimatedBackground from "../shared/AnimatedBackground";
 
-export default function App() {
+export default function App(){
   return (
-    <div className="min-h-screen relative bg-[#060b22] text-slate-100">
-      <AnimatedBackground />
+    <div className="min-h-full flex flex-col">
       <Header />
-      <main className="relative z-0">
+      <main className="flex-1">
         <Outlet />
       </main>
       <Footer />
