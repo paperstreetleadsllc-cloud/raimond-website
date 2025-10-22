@@ -1,41 +1,48 @@
 ﻿import React, { useState } from "react";
-import AnimatedBackground from "../shared/AnimatedBackground";
-import BetaModal from "../shared/BetaModal";
+import HudCanvas from "../shared/HudCanvas";
+import BetaModal from "../shared/BetaModal"; // if you added earlier; harmless if not used
 
-export default function Hero() {
-  const [open, setOpen] = useState(false);
+export default function Hero(){
+  const [open,setOpen] = useState(false);
 
   return (
-    <section className="relative min-h-[82vh] flex items-center bg-hero-gradient overflow-hidden">
-      <div className="absolute inset-0 bg-grid" />
-      <AnimatedBackground />
-
-      <div className="container relative z-10 grid grid-cols-12 gap-8 md:gap-10 py-24">
-        <div className="col-span-12 lg:col-span-6 xl:col-span-5">
-          <div className="eyebrow mb-4">Trading Infrastructure & AI</div>
-          <h1 className="h1-hero max-w-[16ch]">
-            RAimond — RAi: your AI trading partner
+    <section className="relative hud-grid scanlines overflow-hidden">
+      <div className="container section-pad relative z-10 grid grid-cols-12 gap-10 items-center">
+        {/* Copy column */}
+        <div className="col-span-12 lg:col-span-6">
+          <div className="chip mb-5"><span className="chip-dot" /> Adaptive Trading Assistant</div>
+          <h1 className="h1 max-w-[18ch]">
+            Your <span className="text-[var(--accent)]">accountability co-pilot</span> for consistent trading.
           </h1>
-          <p className="p-hero mt-6">
-            Institutional-grade infrastructure and an AI assistant that enforces
-            discipline, logs trades, and gives real-time voice & HUD coaching — built
-            for serious traders who want consistency.
+          <p className="lede mt-5 max-w-[62ch]">
+            RAimond watches over your sessions like a desk coach—learning your patterns, 
+            flagging over-confidence and revenge trades, reinforcing discipline, and giving timed reminders. 
+            It finds inefficiencies and prescribes fixes, so you trade like the <em>house</em>, not the crowd.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">
-            <a className="btn btn-lg btn-amber">See RAi Features</a>
-            <button className="btn btn-lg btn-ghost" onClick={()=>setOpen(true)}>
-              Join the beta
-            </button>
+            <a className="btn btn-lg btn-accent" href="#features">See capabilities</a>
+            <button className="btn btn-lg btn-ghost" onClick={()=>setOpen(true)}>Join the beta</button>
+            {/* Fallback: <a className="btn btn-lg btn-ghost" href="mailto:support@raimondai.com?subject=Join%20the%20RAimond%20beta">Join the beta</a> */}
           </div>
+
+          <div className="mt-8 hr-glow" />
+          <ul className="mt-6 grid sm:grid-cols-3 gap-3 text-sm text-slate-300">
+            <li className="chip">Live voice nudges</li>
+            <li className="chip">Daily lockouts & cooldowns</li>
+            <li className="chip">Journal + analytics</li>
+          </ul>
         </div>
 
-        <div className="col-span-12 lg:col-span-6 xl:col-span-7 flex lg:justify-end">
-          <div className="hud-card w-full max-w-[560px] h-[420px] md:h-[480px] lg:h-[520px]" />
+        {/* HUD column */}
+        <div className="col-span-12 lg:col-span-6">
+          <div className="glass relative w-full max-w-[620px] h-[420px] md:h-[520px] mx-auto">
+            <HudCanvas className="absolute inset-0 rounded-[20px]" />
+          </div>
         </div>
       </div>
 
-      <BetaModal open={open} onClose={()=>setOpen(false)} />
+      {open && <BetaModal open={open} onClose={()=>setOpen(false)} />}
     </section>
   );
 }

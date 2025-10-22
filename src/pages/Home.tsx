@@ -1,17 +1,18 @@
+﻿import React from "react";
 import Hero from "../sections/Hero";
-import WhatWeDo from "../sections/WhatWeDo";
-import Product from "../sections/Product";
-import Careers from "../sections/Careers";
-import Journal from "../sections/Journal";
+import CoachStrip from "../sections/CoachStrip";
+import HowItLearns from "../sections/HowItLearns";
+import Features from "../sections/Features";
+import CTA from "../sections/CTA";
 
-export default function Home() {
+export default function Home(){
   return (
     <>
       <Hero />
-      <WhatWeDo />
-      <Product />
-      <Careers />
-      <Journal />
+      <CoachStrip />
+      <HowItLearns />
+      <Features />
+      <CTA />
     </>
   );
 }
