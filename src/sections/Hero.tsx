@@ -1,50 +1,48 @@
 ﻿import { motion } from "framer-motion";
 import hud from "../assets/hud-mockup.png";
-import AnimatedBackground from "../shared/AnimatedBackground";
 
 export default function Hero() {
   return (
-    <section className="relative bg-hero-gradient min-h-[92vh] flex items-center pt-24" aria-label="Hero">
-      {/* NEW: animated background */}
-      <AnimatedBackground />
-
-      <div className="section py-12 relative">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+    <section className="hero-wrap pt-28 pb-24 md:pt-32 md:pb-28">
+      <div className="hero-noise" />
+      <div className="section relative z-10 mx-auto max-w-7xl px-6">
+        <div className="grid items-center gap-10 md:grid-cols-2">
+          {/* Left copy */}
           <div>
-            <h1 className="font-display text-4xl md:text-5xl font-extrabold leading-tight">
-              RAimond â€” RAi: your AI trading partner
-            </h1>
-            <p className="mt-6 text-lg text-slate-300 max-w-xl">
-              Institutional-grade infrastructure and an AI assistant that enforces discipline, logs trades,
-              and gives real-time voice & HUD coaching â€” built for serious traders who want consistency.
+            <h1 className="h1">RAimond – RAI: your AI trading partner</h1>
+            <p className="p-lg mt-4 max-w-xl text-slate-300">
+              Institutional-grade infrastructure and an AI assistant that enforces discipline, logs trades, and gives real-time voice &amp; HUD coaching – built for serious traders who want consistency.
             </p>
-            <div className="mt-8 flex gap-4">
-              <a href="#product" className="btn-primary">See RAi Features</a>
-              <a href="#careers" className="btn-ghost">Join the beta</a>
+
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <a href="#features" className="btn-amber">See RAI Features</a>
+              <a href="/#beta" className="btn-ghost">Join the beta</a>
             </div>
-            <ul className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-slate-300/80">
-              <li>â€¢ Real-time trade monitoring & voice overlays</li>
-              <li>â€¢ Discipline lockouts & daily reviews</li>
-              <li>â€¢ Integrations: Topstep, Sierra Chart, Bookmap</li>
-              <li>â€¢ Trade journaling + analytics</li>
+
+            <ul className="mt-6 grid gap-2 text-sm text-slate-400 sm:grid-cols-2">
+              <li>• Real-time trade monitoring &amp; voice overlays</li>
+              <li>• Discipline lockouts &amp; daily reviews</li>
+              <li>• Integrations: Topstep, Sierra Chart, Bookmap</li>
+              <li>• Trade journaling + analytics</li>
             </ul>
           </div>
 
-          <div>
-            <div className="rounded-2xl overflow-hidden shadow-2xl">
-              <motion.img
-                src={hud}
-                alt="RAi HUD mockup"
-                className="w-full h-80 object-cover bg-black/40"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-              />
-            </div>
-            <p className="text-xs text-slate-400 mt-3">
-              HUD preview â€” customizable voice, overlays, and real-time reminders.
+          {/* Right visual */}
+          <motion.div
+            className="glass p-3 md:p-4"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: [0.2, 0.8, 0.2, 1] }}
+          >
+            <img
+              src={hud}
+              alt="HUD preview"
+              className="w-full rounded-lg object-cover"
+            />
+            <p className="p-sm mt-2 text-center text-slate-400">
+              HUD preview — customizable voice, overlays, and real-time reminders.
             </p>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
