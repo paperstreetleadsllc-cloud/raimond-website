@@ -1,6 +1,6 @@
 {
   "redirects": [
-    { "source": "https://www.raimondai.com/(.*)", "destination": "https://raimondai.com/$1", "permanent": true }
+    { "source": "/(.*)", "destination": "https://raimondai.com/$1", "has": [{ "type": "host", "value": "www.raimondai.com" }], "permanent": true }
   ],
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/$1" },
