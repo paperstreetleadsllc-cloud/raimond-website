@@ -1,38 +1,20 @@
-﻿/* Tailwind core (must be first) */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Fonts */
-@import "@fontsource-variable/inter/index.css";
-@import "@fontsource/space-grotesk/400.css";
-@import "@fontsource/space-grotesk/500.css";
-@import "@fontsource/space-grotesk/600.css";
-
-/* Optical sizing for Inter Variable */
-:root { font-optical-sizing: auto; }
-
-/* Layout/base */
 html, body, #root { height: 100%; }
-body { @apply bg-[#071332] text-slate-100 antialiased font-sans; }
+body {
+  font-family: InterVariable, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: linear-gradient(180deg, #071026 0%, #0b1a36 55%, #101829 100%);
+  color: #cbd5e1;
+}
+.section { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
-/* Type scale (RAEN-like) */
-.h1 { font-family: "Space Grotesk", InterVariable, system-ui, sans-serif; font-weight: 600; letter-spacing: -0.02em; line-height: 1.05; font-size: clamp(36px, 6vw, 64px); }
-.h2 { font-family: "Space Grotesk", InterVariable, system-ui, sans-serif; font-weight: 600; letter-spacing: -0.01em; line-height: 1.1;  font-size: clamp(28px, 4vw, 40px); }
-.h3 { font-family: "Space Grotesk", InterVariable, system-ui, sans-serif; font-weight: 600; letter-spacing: -0.01em; line-height: 1.15; font-size: clamp(22px, 3vw, 28px); }
-.p-lg { font-size: clamp(16px, 1.2vw, 18px); line-height: 1.65; }
-.p-sm { font-size: 14px; line-height: 1.6; }
+.hud-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(19,28,44,0.04));
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.03);
+  box-shadow: 0 12px 40px rgba(3,6,12,0.6);
+}
 
-/* Links + pills */
-.link { @apply text-amber-400 hover:text-amber-300 underline-offset-2 decoration-transparent hover:decoration-amber-300 transition-colors; }
-.btn-amber { @apply inline-flex items-center gap-2 rounded-xl bg-amber-400 px-4 py-2 font-medium text-[#0A1229] hover:bg-amber-300 transition-colors; }
-.btn-ghost { @apply inline-flex items-center gap-2 rounded-xl border border-white/10 px-4 py-2 text-slate-100 hover:border-white/20 transition-colors; }
-
-/* RAEN-style background: subtle animated gradient + right spotlight + noise */
-.hero-wrap { position: relative; overflow: hidden; background: radial-gradient(1200px 600px at 75% 20%, rgba(93,120,255,0.16), rgba(9,18,46,0)) , radial-gradient(900px 500px at 85% 40%, rgba(255,178,60,0.08), rgba(9,18,46,0)) , linear-gradient(180deg, #071332 0%, #0b1a45 60%, #0c182a 100%); }
-@keyframes bg-pan { 0%{transform:translate3d(0,0,0) scale(1)} 50%{transform:translate3d(-2%,1%,0) scale(1.015)} 100%{transform:translate3d(0,0,0) scale(1)} }
-.hero-wrap::before{ content:""; position:absolute; inset:-20%; background: radial-gradient(60% 60% at 80% 30%, rgba(255,255,255,0.04), rgba(0,0,0,0)); filter: blur(40px); animation: bg-pan 22s ease-in-out infinite; }
-.hero-noise{ position:absolute; inset:0; opacity:.25; background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.45'/></svg>"); background-size:320px 320px; mix-blend:soft-light; pointer-events:none; }
-
-/* Card glass look for the HUD box */
-.glass { @apply bg-white/5 backdrop-blur-md border border-white/10 shadow-xl; border-radius: 16px; }
+* { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
