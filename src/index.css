@@ -1,20 +1,56 @@
-@tailwind base;
+﻿@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 html, body, #root { height: 100%; }
+:root { --grid-size: 24px; }
+
 body {
   font-family: InterVariable, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  background: linear-gradient(180deg, #071026 0%, #0b1a36 55%, #101829 100%);
-  color: #cbd5e1;
+  background: var(--bg, #0B152C);
+  color: #CBD5E1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
 .section { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
-.hud-card {
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(19,28,44,0.04));
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.03);
-  box-shadow: 0 12px 40px rgba(3,6,12,0.6);
+/* Subtle dotted grid (two layers so high-DPI looks crisp) */
+.bg-grid::before {
+  content: "";
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(rgba(255,255,255,.05) 1px, transparent 1.2px),
+    radial-gradient(rgba(255,255,255,.025) 1px, transparent 1.2px);
+  background-size: var(--grid-size) var(--grid-size), calc(var(--grid-size) * .5) calc(var(--grid-size) * .5);
+  background-position: 0 0, calc(var(--grid-size) * .25) calc(var(--grid-size) * .25);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 75%, transparent 100%);
+  pointer-events: none;
 }
 
-* { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+/* Glass panel used for the HUD preview */
+.hud-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(19,28,44,0.06));
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: var(--hud-shadow, 0 18px 80px rgba(0,0,0,.6));
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  box-shadow: 0 20px 60px rgba(0,0,0,.55);
+}
+
+/* Headings scale nicely on wide screens */
+.h1-hero {
+  @apply font-display text-white leading-tight;
+  font-size: clamp(2.2rem, 3vw + 1rem, 4.25rem);
+  letter-spacing: -0.01em;
+}
+.p-hero {
+  font-size: clamp(.95rem, .5vw + .75rem, 1.125rem);
+  color: #A7B4C7;
+}
+.btn {
+  @apply inline-flex items-center justify-center px-4 py-2 rounded-md font-medium transition;
+}
+.btn-amber { @apply bg-brand-amber text-slate-900 hover:brightness-95; }
+.btn-ghost { @apply border border-slate-600 text-slate-200 hover:border-slate-500; }
