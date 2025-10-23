@@ -1,4 +1,5 @@
 import React from "react";`nimport useReveal from "../hooks/useReveal";
+
 import AnimatedBackground from "../shared/AnimatedBackground";
 import BetaModal from "../shared/BetaModal";
 
@@ -14,7 +15,7 @@ export default function Hero() {`n  useReveal();
           </span>
 
           <h1 className="font-display text-white tracking-[-0.03em] leading-[0.95] text-[40px] md:text-[56px] lg:text-[64px]">
-            Meet <span className="text-teal-300">RAIMOND</span> â€” your
+            Meet <span className="text-teal-300">RAIMOND</span> Ã¢â‚¬â€ your
             <br className="hidden md:block" /> accountability&nbsp;co-pilot
           </h1>
 
