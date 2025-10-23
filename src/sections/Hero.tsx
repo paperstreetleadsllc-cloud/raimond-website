@@ -1,12 +1,12 @@
-import React from "react";
+import React from "react";`nimport useReveal from "../hooks/useReveal";
 import AnimatedBackground from "../shared/AnimatedBackground";
 import BetaModal from "../shared/BetaModal";
 
-export default function Hero() {
+export default function Hero() {`n  useReveal();
   const [openModal, setOpenModal] = React.useState(false);
 
   return (
-    <section className="relative w-full overflow-hidden">
+    <section className="reveal" className="relative w-full overflow-hidden">
       <div className="section section-pad grid gap-10 lg:grid-cols-12 items-center">
         <div className="lg:col-span-6 text-left">
           <span className="inline-flex items-center gap-2 text-teal-300/90 text-xs uppercase tracking-[.18em] mb-4">
@@ -14,7 +14,7 @@ export default function Hero() {
           </span>
 
           <h1 className="font-display text-white tracking-[-0.03em] leading-[0.95] text-[40px] md:text-[56px] lg:text-[64px]">
-            Meet <span className="text-teal-300">RAIMOND</span> — your
+            Meet <span className="text-teal-300">RAIMOND</span> â€” your
             <br className="hidden md:block" /> accountability&nbsp;co-pilot
           </h1>
 

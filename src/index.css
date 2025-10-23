@@ -83,3 +83,48 @@ h4 { font-size: 1.375rem; line-height: 1.4; }
 }
 body{ font-size: var(--step-0); line-height: 1.75; }
 h1,h2,h3 { letter-spacing: -0.02em; }
+/* ===== Alphamark-style font + motion polish ===== */
+:root {
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --rai-teal: #20f2d9;
+}
+
+body {
+  font-family: var(--font-body);
+  color: #cbd5e1;
+  background: linear-gradient(180deg,#070c1f 0%,#0b1530 50%,#101a33 100%);
+}
+
+/* Headings */
+h1,h2,h3,h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* Subtle scroll reveal */
+.reveal { opacity:0; transform:translateY(20px); transition:opacity .8s ease, transform .8s ease; }
+.reveal.visible { opacity:1; transform:none; }
+
+/* Depth lighting */
+.card {
+  background: linear-gradient(180deg,rgba(255,255,255,.02),rgba(15,23,42,.06));
+  border: 1px solid rgba(148,163,184,.18);
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(3,6,12,.35), 0 0 0 1px rgba(32,242,217,.1) inset;
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(94,234,212,.6);
+  box-shadow: 0 16px 40px rgba(3,6,12,.45), 0 0 0 1px rgba(32,242,217,.25) inset;
+}
+
+/* Button micro motion */
+button, a.button-like {
+  transition: transform .2s ease, background .3s ease;
+}
+button:hover, a.button-like:hover {
+  transform: translateY(-2px);
+}
