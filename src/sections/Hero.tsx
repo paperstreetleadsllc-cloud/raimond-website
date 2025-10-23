@@ -1,48 +1,41 @@
-import React, { useState } from "react";
-import HudCanvas from "../shared/HudCanvas";
-import BetaModal from "../shared/BetaModal"; // if you added earlier; harmless if not used
+import React from "react";
+import AnimatedBackground from "../shared/AnimatedBackground";
 
-export default function Hero(){
-  const [open,setOpen] = useState(false);
-
+export default function Hero() {
   return (
-    <section className="relative hud-grid scanlines overflow-hidden">
-      <div className="container section-pad relative z-10 grid grid-cols-12 gap-10 items-center">
-        {/* Copy column */}
-        <div className="col-span-12 lg:col-span-6">
-          <div className="chip mb-5"><span className="chip-dot" /> Adaptive Trading Assistant</div>
-          <h1 className="text-white font-display text-4xl md:text-7xl lg:text-8xl leading-[0.95] max-w-3xl">
-  Meet <span className="text-[var(--accent)]">RAI</span>mond Ã¢â‚¬â€ your accountability co-pilot
-</h1>
-          <p className="lede mt-5 max-w-[62ch]">
-            RAimond watches over your sessions like a desk coachÃ¢â‚¬â€learning your patterns, 
-            flagging over-confidence and revenge trades, reinforcing discipline, and giving timed reminders. 
-            It finds inefficiencies and prescribes fixes, so you trade like the <em>house</em>, not the crowd.
+    <section className="relative min-h-[78vh] flex items-center">
+      <div className="absolute inset-0 bg-hero-gradient"></div>
+      <AnimatedBackground />
+
+      <div className="section relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center py-24">
+        <div className="lg:col-span-6">
+          <h1 className="text-white font-display text-[44px] leading-[1.0] md:text-6xl lg:text-7xl max-w-[18ch] tracking-[-0.02em]">
+            Meet <span className="text-teal-300">RAImond</span> &mdash; your accountability co-pilot
+          </h1>
+
+          <p className="mt-6 text-slate-300/90 max-w-xl leading-relaxed">
+            RAI watches over your sessions like a desk coach &mdash; learning your patterns,
+            flagging over-confidence and revenge trades, reinforcing discipline, and giving timed
+            reminders. It finds inefficiencies and prescribes fixes, so you trade like the house,
+            not the crowd.
           </p>
 
-          <div className="mt-8 flex flex-wrap gap-3">
-            <a className="btn btn-lg btn-accent" href="#features">See capabilities</a>
-            <button className="btn btn-lg btn-ghost" onClick={()=>setOpen(true)}>Join the beta</button>
-            {/* Fallback: <a className="btn btn-lg btn-ghost" href="mailto:support@raimondai.com?subject=Join%20the%20RAimond%20beta">Join the beta</a> */}
+          <div className="mt-7 flex gap-3">
+            <a className="px-4 py-2 rounded-md bg-brand-amber text-slate-900 font-medium hover:brightness-110">See capabilities</a>
+            <a className="px-4 py-2 rounded-md border border-slate-600/60 text-slate-200 hover:bg-white/5">Join the beta</a>
           </div>
 
-          <div className="mt-8 hr-glow" />
-          <ul className="mt-6 grid sm:grid-cols-3 gap-3 text-sm text-slate-300">
-            <li className="chip">Live voice nudges</li>
-            <li className="chip">Daily lockouts & cooldowns</li>
-            <li className="chip">Journal + analytics</li>
-          </ul>
+          <div className="mt-5 flex flex-wrap gap-2">
+            <span className="px-3 py-1 rounded-full bg-white/5 text-slate-300/90 text-sm">Live voice nudges</span>
+            <span className="px-3 py-1 rounded-full bg-white/5 text-slate-300/90 text-sm">Daily lockouts & cooldowns</span>
+            <span className="px-3 py-1 rounded-full bg-white/5 text-slate-300/90 text-sm">Journal + analytics</span>
+          </div>
         </div>
 
-        {/* HUD column */}
-        <div className="col-span-12 lg:col-span-6">
-          <div className="glass relative w-full max-w-[620px] h-[420px] md:h-[520px] mx-auto">
-            <HudCanvas className="absolute inset-0 rounded-[20px]" />
-          </div>
+        <div className="lg:col-span-6 lg:flex lg:justify-end">
+          <div className="hud-card w-full max-w-[460px] h-[320px] lg:h-[380px]"></div>
         </div>
       </div>
-
-      {open && <BetaModal open={open} onClose={()=>setOpen(false)} />}
     </section>
   );
 }

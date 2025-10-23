@@ -1,3 +1,4 @@
+import LogoWordOne from "../../brand/LogoWordOne";
 import LogoWordHeavy from "../brand/LogoWordHeavy";
 import React from "react";
 import { NavLink } from "react-router-dom";
