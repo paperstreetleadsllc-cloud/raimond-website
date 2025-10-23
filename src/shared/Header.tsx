@@ -1,9 +1,6 @@
-import LogoWordOne from "../../brand/LogoWordOne";
-import LogoWordHeavy from "../brand/LogoWordHeavy";
 import React from "react";
+import LogoRAIMOND from "../brand/LogoRAIMOND";
 import { NavLink } from "react-router-dom";
-import LogoWordHeavy from "../brand/LogoWordHeavy";
-
 const linkBase =
   "relative px-3 py-2 text-sm text-slate-300 hover:text-white transition";
 const activeUnderline =
@@ -20,7 +17,7 @@ export default function Header(){
     <header className="sticky top-0 z-40">
       <div className="backdrop-blur-md bg-[rgba(5,10,20,.55)] border-b border-white/10">
         <nav className="container h-14 flex items-center justify-between">
-          <LogoWordHeavy className="h-6 md:h-7" />
+          <LogoRAIMOND className="h-6 md:h-7" />
           <div className="flex items-center gap-1">
             {items.map(it => (
               <NavLink
