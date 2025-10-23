@@ -128,3 +128,15 @@ button, a.button-like {
 button:hover, a.button-like:hover {
   transform: translateY(-2px);
 }
+/* ===== Sticky Glass Header ===== */
+.site-header .inner{max-width:1200px;margin:0 auto;padding:10px 16px;}
+.glass{background:transparent;border-bottom:1px solid transparent;}
+.glass.on{
+  backdrop-filter: blur(10px);
+  background: rgba(9,16,32,.60);
+  border-bottom-color: rgba(148,163,184,.18);
+  box-shadow: 0 8px 32px rgba(3,6,12,.38);
+}
+@supports not (backdrop-filter: blur(10px)) {
+  .glass.on{background: rgba(9,16,32,.90);}
+}
