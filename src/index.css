@@ -38,3 +38,48 @@ h4 { font-size: 1.375rem; line-height: 1.4; }
   border: 1px solid rgba(255,255,255,0.03);
   box-shadow: 0 14px 45px rgba(3,6,12,0.6);
 }
+/* ----- Layout rhythm & containers ----- */
+.section { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.section-pad { padding-top: clamp(56px, 8vw, 120px); padding-bottom: clamp(56px, 8vw, 120px); }
+.section-head { margin-bottom: clamp(24px, 4vw, 48px); }
+.prose-intro { max-width: 64ch; }
+
+/* Cards (minimal, high-contrast) */
+.card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(15,23,42,0.06));
+  border: 1px solid rgba(148,163,184,.18);
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(3,6,12,0.5);
+}
+.card:hover { border-color: rgba(94,234,212,.5); }
+
+/* Pills */
+.badge {
+  display:inline-flex; align-items:center; gap:.5rem;
+  font-size:.75rem; line-height:1;
+  padding:.5rem .75rem; border-radius:9999px;
+  background: rgba(94,234,212,.12);
+  color: rgb(94,234,212);
+  border:1px solid rgba(94,234,212,.35);
+}
+
+/* Background gradients */
+.bg-hero-gradient{
+  background: linear-gradient(180deg,#070c1f 0%,#0b1530 45%,#0e1930 100%);
+}
+.bg-hero-vignette{
+  mask-image: radial-gradient(1200px 600px at 50% 15%, black 40%, transparent 80%);
+}
+
+/* Type scale (bigger, but disciplined) */
+:root{
+  --step--1: 0.875rem;
+  --step-0: 1rem;
+  --step-1: 1.125rem;
+  --step-2: 1.25rem;
+  --step-3: 1.5rem;
+  --step-4: 1.75rem;
+  --step-5: 2rem;
+}
+body{ font-size: var(--step-0); line-height: 1.75; }
+h1,h2,h3 { letter-spacing: -0.02em; }
