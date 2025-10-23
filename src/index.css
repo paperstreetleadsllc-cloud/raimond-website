@@ -1,4 +1,4 @@
-﻿@tailwind base;
+@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -100,3 +100,38 @@ body{
   filter:drop-shadow(0 0 10px rgba(25,224,200,.4))
 }.logo-glow:hover { filter: drop-shadow(0 0 22px rgba(25,224,200,.55)); }
 .logo-glow:hover { filter: drop-shadow(0 0 22px rgba(25,224,200,.55)); }
+
+
+/* ===== HUD surface layers (Raen-like) ===== */
+:root{
+  --bg-navy-1:#071026;
+  --bg-navy-2:#0b1a36;
+  --bg-navy-3:#101829;
+}
+body{
+  background:
+    /* subtle dotted grid */
+    radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px) 0 0/22px 22px,
+    /* scanline texture */
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px) 0 0/100% 3px,
+    /* base gradient */
+    linear-gradient(180deg, var(--bg-navy-1) 0%, var(--bg-navy-2) 55%, var(--bg-navy-3) 100%);
+}
+
+/* stronger vignette ring behind hero */
+.bg-hero-vignette:before{
+  content:"";
+  position:absolute; inset:0;
+  background:
+    radial-gradient(65% 55% at 65% 35%, rgba(19,224,205,0.08) 0%, rgba(0,0,0,0) 60%),
+    radial-gradient(120% 85% at 50% 50%, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.0) 40%, rgba(0,0,0,0.6) 100%);
+  pointer-events:none;
+}
+
+/* make the HUD card feel glassy and deeper */
+.hud-card{
+  backdrop-filter: blur(10px);
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(10,15,25,0.35));
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 14px 48px rgba(3,6,12,0.7), inset 0 0 60px rgba(31, 210, 192, 0.06);
+}

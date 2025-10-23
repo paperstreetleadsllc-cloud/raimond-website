@@ -1,61 +1,95 @@
-﻿import React, { useRef, useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 
+/**
+ * Neon orbital dots + scanlines + parallax shimmer
+ * - Looks like a calm HUD backdrop behind the hero.
+ */
 export default function AnimatedBackground({ className = "" }: { className?: string }) {
   const ref = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
-    const canvas = ref.current!;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d")!;
+    const c = ref.current!;
+    if (!c) return;
+    const ctx = c.getContext("2d")!;
+    let raf = 0;
     const DPR = Math.max(1, window.devicePixelRatio || 1);
-    let raf = 0, t = 0;
 
-    const resize = () => {
-      canvas.width = Math.floor(canvas.clientWidth * DPR);
-      canvas.height = Math.floor(canvas.clientHeight * DPR);
+    function size() {
+      const { clientWidth: w, clientHeight: h } = c;
+      c.width = Math.floor(w * DPR);
+      c.height = Math.floor(h * DPR);
       ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-    };
+    }
 
-    const draw = () => {
-      const w = canvas.clientWidth;
-      const h = canvas.clientHeight;
+    size();
+    window.addEventListener("resize", size, { passive: true });
+
+    // particles in soft orbits
+    const P = 120;
+    const dots = Array.from({ length: P }).map((_, i) => {
+      const r = 30 + Math.random() * 260;       // orbit radius
+      const a = Math.random() * Math.PI * 2;    // angle
+      const s = 0.001 + Math.random() * 0.004;  // speed
+      const z = 0.4 + Math.random() * 0.6;      // depth
+      return { r, a, s, z };
+    });
+
+    let t = 0;
+    function draw() {
+      const w = c.clientWidth, h = c.clientHeight;
       ctx.clearRect(0, 0, w, h);
 
-      const cols = Math.max(60, Math.floor(w / 18));
-      const rows = Math.max(12, Math.floor(h / 26));
-
-      ctx.fillStyle = "rgba(255,255,255,0.06)";
-      for (let i = 0; i < cols; i++) {
-        for (let j = 0; j < rows; j++) {
-          const x0 = (i / (cols - 1)) * w;
-          const y0 = (j / (rows - 1)) * h;
-          const wave =
-            Math.sin(i * 0.11 + t * 0.5) * 10 +
-            Math.cos(j * 0.17 + t * 0.3) * 5;
-          const x = x0 + wave * 0.35;
-          const y = y0 + Math.cos(i * 0.08 + t) * 5;
-          ctx.fillRect(x - 0.5, y - 2.5, 1, 5);
-        }
-      }
-
-      // gentle vertical vignette like Raen
-      const g = ctx.createLinearGradient(0, 0, 0, h);
-      g.addColorStop(0, "rgba(7,12,24,0.25)");
-      g.addColorStop(1, "rgba(7,12,24,0.55)");
+      // subtle radial glow
+      const g = ctx.createRadialGradient(w*0.65, h*0.35, 10, w*0.65, h*0.35, Math.max(w, h));
+      g.addColorStop(0, "rgba(11, 208, 192, 0.08)");
+      g.addColorStop(1, "rgba(5, 10, 20, 0.0)");
       ctx.fillStyle = g;
       ctx.fillRect(0, 0, w, h);
 
-      t += 0.008;
-      raf = requestAnimationFrame(draw);
-    };
+      // orbits guides
+      ctx.strokeStyle = "rgba(120, 220, 210, 0.08)";
+      ctx.lineWidth = 1;
+      for (let r = 90; r <= 300; r += 50) {
+        ctx.beginPath();
+        ctx.ellipse(w*0.65, h*0.35, r*1.2, r*0.6, 0.2, 0, Math.PI*2);
+        ctx.stroke();
+      }
 
-    resize();
-    window.addEventListener("resize", resize, { passive: true });
+      // dots moving on slightly skewed ellipses
+      ctx.fillStyle = "rgba(190, 255, 246, 0.75)";
+      dots.forEach(d => {
+        d.a += d.s;
+        const ex = Math.cos(d.a) * d.r * 1.2;
+        const ey = Math.sin(d.a * 0.9) * d.r * 0.6;
+        const x = w*0.65 + ex;
+        const y = h*0.35 + ey;
+        const size = 1 + (1-d.z) * 1.8;
+        ctx.globalAlpha = 0.4 + 0.6 * Math.sin((d.a + t) * 0.5) ** 2;
+        ctx.fillRect(x - size/2, y - size/2, size, size);
+      });
+
+      ctx.globalAlpha = 1;
+
+      // scanlines
+      ctx.fillStyle = "rgba(255,255,255,0.03)";
+      for (let y = 0; y < h; y += 3) {
+        ctx.fillRect(0, y, w, 1);
+      }
+
+      // vignette
+      const vg = ctx.createLinearGradient(0, 0, 0, h);
+      vg.addColorStop(0, "rgba(0,0,0,0.25)");
+      vg.addColorStop(0.35, "rgba(0,0,0,0.0)");
+      vg.addColorStop(1, "rgba(0,0,0,0.35)");
+      ctx.fillStyle = vg;
+      ctx.fillRect(0, 0, w, h);
+
+      t += 0.01;
+      raf = requestAnimationFrame(draw);
+    }
+
     raf = requestAnimationFrame(draw);
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("resize", resize);
-    };
+    return () => { cancelAnimationFrame(raf); window.removeEventListener("resize", size); };
   }, []);
 
   return (
