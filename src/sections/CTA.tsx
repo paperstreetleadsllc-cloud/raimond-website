@@ -1,4 +1,5 @@
-﻿import React from "react";
+import React from "react";
+import Button from "../shared/Button";
 
 export default function CTA(){
   return (
@@ -9,7 +10,8 @@ export default function CTA(){
             <h3 className="text-white text-2xl md:text-3xl font-semibold">Make consistency your edge.</h3>
             <p className="mt-2 text-slate-300">Install guardrails, remove noise, and let RAimond keep you honest.</p>
           </div>
-          <a href="mailto:support@raimondai.com?subject=Join%20the%20RAimond%20beta" className="btn btn-lg btn-accent">Request beta access</a>
+          \
+<Button emailTo="support@raimondai.com" size="lg" variant="primary">Join the Beta</Button>
         </div>
       </div>
     </section>

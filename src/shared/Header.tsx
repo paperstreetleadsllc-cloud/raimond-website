@@ -6,6 +6,7 @@ const linkBase =
 const activeUnderline =
   "after:absolute after:left-3 after:right-3 after:-bottom-[2px] after:h-[2px] after:bg-[var(--accent)] after:rounded after:shadow-[0_0_12px_rgba(25,224,200,.6)]";
 
+import Button from "../shared/Button";
 export default function Header(){
   const items = [
     { to: "/", label: "What We Do" },
