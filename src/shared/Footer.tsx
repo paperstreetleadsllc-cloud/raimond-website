@@ -1,18 +1,20 @@
 import React from "react";
-import LogoRAIMOND from "../brand/LogoRAIMOND";
-export default function Footer(){
+import LogoWordHeavy from "../brand/LogoWordHeavy"; // fallback to text if missing
+
+export default function Footer() {
   return (
-    <footer className="mt-20 bg-[rgba(5,10,20,.7)] border-t border-white/10">
-      <div className="hr-glow" />
-      <div className="container py-10 flex flex-col md:flex-row gap-6 items-start md:items-center justify-between">
-        <LogoRAIMOND />
-        <div className="text-slate-300 text-sm flex items-center gap-4">
-          <a className="link-accent" href="/privacy">Privacy</a>
-          <span className="text-slate-500">·</span>
-          <a className="link-accent" href="/terms">Terms</a>
-          <span className="text-slate-500">·</span>
-          <span className="text-slate-500">© {new Date().getFullYear()} RAimond</span>
+    <footer className="mt-10 border-t border-white/10">
+      <div className="section py-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          {LogoWordHeavy ? <LogoWordHeavy /> : <span className="text-white font-semibold">RAIMOND</span>}
+          <span className="text-slate-500 text-sm">© {new Date().getFullYear()}</span>
         </div>
+
+        <nav className="flex items-center gap-4 text-sm">
+          <a className="text-slate-300 hover:text-teal-200" href="/privacy">Privacy</a>
+          <a className="text-slate-300 hover:text-teal-200" href="/terms">Terms</a>
+          <a className="text-slate-300 hover:text-teal-200" href="mailto:support@raimondai.com">Contact</a>
+        </nav>
       </div>
     </footer>
   );
