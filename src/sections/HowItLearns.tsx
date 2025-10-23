@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 
 export default function HowItLearns(){
   return (
@@ -7,10 +7,7 @@ export default function HowItLearns(){
         <div className="mb-10">
           <div className="chip mb-3"><span className="chip-dot" /> Adaptive model</div>
           <h2 className="text-3xl md:text-4xl font-semibold text-white">How RAimond learns you</h2>
-          <p className="mt-3 text-slate-300 max-w-[65ch]">
-            Signals, pace, time-of-day, instrument behavior, trade reasons, outcomes—RAimond fuses these
-            into a personalized “edge profile”, highlighting inefficiencies and generating targeted rituals.
-          </p>
+          <p className="mt-3 text-slate-300 max-w-[65ch]">Every trader has a pattern. RAImond learns yours — the pace, time of day, emotional cycles, and execution habits that define your edge. It builds a personal performance profile, then delivers insight-driven prompts and structure designed to refine your process, one decision at a time.</p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">

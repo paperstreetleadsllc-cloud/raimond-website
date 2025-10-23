@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 
 export default function CoachStrip(){
   return (
@@ -7,18 +7,15 @@ export default function CoachStrip(){
         <div className="grid md:grid-cols-3 gap-5">
           <div className="card">
             <h4>Over-confidence guardrails</h4>
-            <p>Dynamic size caps and pacing prompts kick in when you’re hot—so momentum doesn’t
-            drift into risk drift.</p>
+            <p>RAImond helps temper confidence after strong runs by introducing calm pacing prompts and trade-size reminders, keeping momentum disciplined instead of emotional.</p>
           </div>
           <div className="card">
             <h4>Revenge trading breaker</h4>
-            <p>After losses, RAimond enters a cooldown state and switches to low-risk modes with
-            calm voice cues and timeboxed resets.</p>
+            <p>When frustration builds, RAImond guides you into structured cool-down periods — reducing risk, re-centering focus, and re-establishing a neutral mindset before you re-engage the market.</p>
           </div>
           <div className="card">
             <h4>Accountability timers & check-ins</h4>
-            <p>Session start rituals, end-of-day audits, and micro-reviews create consistency 
-            without relying on willpower alone.</p>
+            <p>Daily rituals, end-of-session reflections, and guided micro-reviews build structure into your process — creating consistency through routine, not just motivation.</p>
           </div>
         </div>
       </div>

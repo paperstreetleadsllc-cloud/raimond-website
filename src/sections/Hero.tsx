@@ -14,12 +14,7 @@ export default function Hero() {
             <h1 className="text-white font-display text-[44px] leading-[1.0] md:text-6xl lg:text-7xl max-w-[18ch] tracking-[-0.02em]">
               Meet <span className="text-teal-300">RAImond</span> &mdash; your accountability co-pilot
             </h1>
-            <p className="mt-6 text-slate-300/90 max-w-xl leading-relaxed">
-              RAI watches over your sessions like a desk coach &mdash; learning your patterns,
-              flagging over-confidence and revenge trades, reinforcing discipline, and giving timed
-              reminders. It finds inefficiencies and prescribes fixes, so you trade like the house,
-              not the crowd.
-            </p>
+            <p className="mt-6 text-slate-300/90 max-w-xl leading-relaxed">RAImond quietly observes your trading sessions — learning your unique habits, helping you recognize emotional shifts, and reinforcing consistency when it matters most. It identifies inefficiencies, highlights opportunities for discipline, and offers subtle, real-time guidance so you can trade with focus, composure, and control.</p>
             <div className="mt-7 flex gap-3">
               <a className="px-4 py-2 rounded-md bg-brand-amber text-slate-900 font-medium hover:brightness-110">See capabilities</a>
               <a className="px-4 py-2 rounded-md border border-slate-600/60 text-slate-200 hover:bg-white/5">Join the beta</a>
