@@ -1,3 +1,4 @@
+import LogoRAIMOND from "../brand/LogoRAIMOND";
 import React from "react";
 import useStickyHeader from "../hooks/useStickyHeader";
 
