@@ -3,45 +3,40 @@ import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+// very light in-memory rate limiting (per IP)
+const hits = new Map<string, { count: number; ts: number }>();
+function tooMany(req: VercelRequest, limit = 5, windowMs = 60_000) {
+  const ip = (req.headers["x-forwarded-for"] as string)?.split(",")[0]?.trim() || req.socket.remoteAddress || "ip";
+  const now = Date.now();
+  const rec = hits.get(ip) ?? { count: 0, ts: now };
+  if (now - rec.ts > windowMs) { rec.count = 0; rec.ts = now; }
+  rec.count++; hits.set(ip, rec);
+  return rec.count > limit;
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ ok: false, message: "Method not allowed" });
-  }
+  if (req.method !== "POST") return res.status(405).json({ message: "Method not allowed" });
+
+  if (tooMany(req)) return res.status(429).json({ message: "Too many requests. Try again in a minute." });
+
+  const { name = "", email = "", honeypot = "" } = req.body || {};
+  if (honeypot) return res.status(200).json({ message: "Thanks!" }); // quiet drop
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return res.status(400).json({ message: "Please use a valid email." });
 
   try {
-    const { name = "", email = "", note = "", hp = "" } = (typeof req.body === "string" ? JSON.parse(req.body) : req.body) || {};
-
-    // Simple validation + honeypot
-    if (hp) return res.status(200).json({ ok: true, message: "Thanks!" });
-    if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-      return res.status(400).json({ ok: false, message: "Please enter a valid email." });
-    }
-
-    const toAddress = "support@raimondai.com"; // ← change if you want
-    const fromAddress = "RAIMOND <notifications@raimondai.com>"; // works best if you verify domain in Resend
-    const fallbackFrom = "RAIMOND Beta <onboarding@resend.dev>"; // safe fallback if domain not verified
-
     await resend.emails.send({
-      from: process.env.RESEND_FROM || fromAddress,
-      to: [toAddress],
-      subject: "New RAIMOND beta signup",
-      text: [
-        "New beta signup:",
-        `Name: ${name || "(not provided)"}`,
-        `Email: ${email}`,
-        note ? `Note: ${note}` : null,
-        "",
-        `Time: ${new Date().toISOString()}`,
-      ].filter(Boolean).join("\n"),
-      reply_to: email
+      from: "RAIMOND <noreply@raimondai.com>",
+      to: ["support@raimondai.com"],
+      subject: "New Beta Request",
+      html: `
+        <h2>New RAIMOND beta request</h2>
+        <p><b>Name:</b> ${String(name).slice(0,120)}</p>
+        <p><b>Email:</b> ${email}</p>
+      `,
     });
-
-    return res.status(200).json({ ok: true, message: "Thanks — you’re on the list! We’ll email next steps." });
-  } catch (err: any) {
-    console.error(err);
-    const msg = !process.env.RESEND_API_KEY
-      ? "Server email not configured."
-      : "Could not send email. Please try again.";
-    return res.status(500).json({ ok: false, message: msg });
+    return res.status(200).json({ message: "You're on the list!" });
+  } catch (e: any) {
+    const msg = e?.message || "Email failed";
+    return res.status(500).json({ message: "Something went wrong.", detail: msg });
   }
 }
