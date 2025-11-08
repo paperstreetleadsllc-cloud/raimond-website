@@ -1,0 +1,48 @@
+### RAimond Resend Email Test
+### Use this with VS Code REST Client extension
+### https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+
+### Variables (Update these!)
+@resendApiKey = YOUR_RESEND_API_KEY_HERE
+@testEmail = your-email@example.com
+
+### Test 1: Send Welcome Email
+POST https://api.resend.com/emails
+Authorization: Bearer {{resendApiKey}}
+Content-Type: application/json
+
+{
+  "from": "RAimond <welcome@mail.raimondai.com>",
+  "to": ["{{testEmail}}"],
+  "subject": "Test: Welcome to RAimond – Your Starter Pack Inside 🚀",
+  "html": "<!DOCTYPE html><html><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Welcome to RAimond</title></head><body style=\"font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;\"><div style=\"background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px 20px; text-align: center; border-radius: 10px 10px 0 0;\"><h1 style=\"color: white; margin: 0; font-size: 32px;\">Welcome to RAimond</h1></div><div style=\"background: #f9f9f9; padding: 40px 30px; border-radius: 0 0 10px 10px;\"><h2 style=\"color: #333; margin-top: 0;\">Your RAimond Starter Pack is Here! 🚀</h2><p>Hi there,</p><p>Thanks for joining RAimond! We're excited to help you level up your trading with AI-powered insights.</p><p><strong>Here's what's in your Starter Pack:</strong></p><ul style=\"line-height: 2;\"><li><strong>Quick Start Guide</strong> – Get up and running in 5 minutes</li><li><strong>Trading Playbooks</strong> – Proven strategies from pro traders</li><li><strong>Free Indicator</strong> – Our signature RAi-EDGE indicator</li><li><strong>Setup Walkthrough</strong> – Connect your platform in 3 steps</li></ul><div style=\"text-align: center; margin: 30px 0;\"><a href=\"https://raimondai.com/starter-pack?id=test-123\" style=\"display: inline-block; background: #667eea; color: white; padding: 14px 32px; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 16px;\">Access Your Starter Pack →</a></div><p style=\"color: #666; font-size: 14px; margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd;\">Questions? Just reply to this email – we're here to help!<br><strong>– The RAimond Team</strong></p></div></body></html>"
+}
+
+###
+
+### Test 2: Send Plain Text Email
+POST https://api.resend.com/emails
+Authorization: Bearer {{resendApiKey}}
+Content-Type: application/json
+
+{
+  "from": "RAimond <welcome@mail.raimondai.com>",
+  "to": ["{{testEmail}}"],
+  "subject": "Test: Plain Text Email from RAimond",
+  "text": "Hello from RAimond!\n\nThis is a plain text test email.\n\nIf you're seeing this, your Resend configuration is working!\n\n– The RAimond Team"
+}
+
+###
+
+### Test 3: Verify Email Domain
+GET https://api.resend.com/domains
+Authorization: Bearer {{resendApiKey}}
+
+###
+
+### Test 4: Get Email Status (replace EMAIL_ID with actual ID from send response)
+@emailId = YOUR_EMAIL_ID_HERE
+GET https://api.resend.com/emails/{{emailId}}
+Authorization: Bearer {{resendApiKey}}
+
+###
