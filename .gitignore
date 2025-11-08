@@ -1,0 +1,68 @@
+﻿# Node / Next / Vite
+node_modules/
+.next/
+dist/
+out/
+.vscode/*
+!.vscode/tasks.json
+!.vscode/settings.json
+
+# OS & temp
+.DS_Store
+Thumbs.db
+
+# Env & secrets
+.env*
+*.log
+
+# Build caches
+.cache/
+coverage/
+
+# Windows system directories
+AppData/
+Contacts/
+Documents/
+Downloads/
+Favorites/
+Links/
+Music/
+OneDrive/
+Saved Games/
+Searches/
+Videos/
+NTUSER.DAT*
+ntuser.dat*
+ntuser.ini
+Application Data/
+Cookies/
+Local Settings/
+My Documents/
+NetHood/
+PrintHood/
+Recent/
+SendTo/
+Start Menu/
+Templates/
+
+# Python / other projects
+*.py
+*.shadow.py
+pipx/
+.python_history
+.thinkorswim/
+.aider/
+.codex/
+.claude/
+.config/
+.local/
+.lesshst
+.gitconfig
+
+# Other projects
+raimond-edge/
+life-insurance-site/
+claude_*.txt
+config.json
+*.png
+nul
