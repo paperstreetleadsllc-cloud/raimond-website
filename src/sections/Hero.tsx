@@ -28,7 +28,7 @@ export default function Hero() {
           <div className="mt-7 flex flex-wrap items-center gap-3">
             <button
               onClick={() => setOpenModal(true)}
-              className="px-5 py-2.5 rounded-lg bg-teal-300 text-slate-900 font-semibold hover:bg-teal-200 transition"
+              className="px-5 py-2.5 rounded-lg bg-teal-300 text-slate-900 font-semibold hover:bg-teal-200 transition shadow-[0_0_20px_rgba(94,234,212,0.4)] hover:shadow-[0_0_30px_rgba(94,234,212,0.6)]"
             >
               Join the Beta
             </button>
