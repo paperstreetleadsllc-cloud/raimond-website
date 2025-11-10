@@ -2,6 +2,7 @@ import React from "react";
 import AnimatedBackground from "../shared/AnimatedBackground";
 import BetaModal from "../shared/BetaModal";
 import useReveal from "../hooks/useReveal";
+import { btnPrimary, btnSecondary } from "../styles/buttons";
 
 export default function Hero() {
   useReveal();
@@ -12,59 +13,65 @@ export default function Hero() {
       <div className="section section-pad grid gap-10 lg:grid-cols-12 items-center">
         <div className="lg:col-span-6 text-left">
           <span className="inline-flex items-center gap-2 text-teal-300/90 text-xs uppercase tracking-[.18em] mb-4">
-            Adaptive Trading Assistant
+            AI Copilot for Traders
           </span>
 
-          <h1 className="font-display text-white tracking-[-0.03em] leading-[0.95] text-[40px] md:text-[56px] lg:text-[64px]">
-            Meet <span className="text-teal-300">RAIMOND</span> — your
-            <br className="hidden md:block" /> accountability&nbsp;co-pilot
+          <h1 className="font-display text-white tracking-[-0.02em] leading-[0.92] text-[48px] md:text-[56px] lg:text-[72px]">
+            Trade with
+            <br className="hidden md:block" />
+            discipline. Keep
+            <br className="hidden md:block" />
+            emotions out of
+            <br className="hidden md:block" />
+            the driver&apos;s seat.
           </h1>
 
-          <p className="prose-intro text-slate-300 mt-5">
-            RAI watches over your plan in real time, coaches discipline, flags over-confidence
-            &amp; revenge trading, and learns your edge to help you trade like the house.
+          <p className="prose-intro text-slate-300 mt-5 max-w-[640px]">
+            RAimond watches order flow, tracks your rules, and blocks impulse
+            decisions with real-time guardrails. Clarity when markets get loud.
           </p>
 
           <div className="mt-7 flex flex-wrap items-center gap-3">
             <button
               onClick={() => setOpenModal(true)}
-              className="px-5 py-2.5 rounded-lg bg-teal-300 text-slate-900 font-semibold hover:bg-teal-200 transition"
+              className={btnPrimary}
             >
-              Join the Beta
+              Start Free Trial
             </button>
 
             <a
-              href="mailto:support@raimondai.com?subject=RAImond%20Inquiry"
-              className="px-5 py-2.5 rounded-lg border border-slate-600 text-slate-100 hover:border-teal-300/60 hover:text-teal-200 transition"
+              href="/demo"
+              className={btnSecondary}
             >
-              Contact Us
+              Watch 90-sec Demo
             </a>
           </div>
 
-          <div className="mt-6 flex flex-wrap gap-2 text-[12px] text-slate-400">
-            <span className="badge">Live voice nudges</span>
-            <span className="badge">Daily lockouts &amp; cooldowns</span>
-            <span className="badge">Journal + analytics</span>
-          </div>
+          <ul className="mt-6 space-y-2 text-sm text-slate-400">
+            <li className="flex items-center gap-2">✓ CME data compatible</li>
+            <li className="flex items-center gap-2">✓ Broker & charting integrations</li>
+            <li className="flex items-center gap-2">✓ No credit card required for trial</li>
+          </ul>
         </div>
 
+        {/* HUD preview card */}
         <div className="lg:col-span-6">
-          <div className="relative hud-card w-full max-w-[520px] h-[340px] lg:h-[380px] mx-auto">
-            {/* Subtle orbital overlay */}
-            <svg viewBox="0 0 520 380" className="absolute inset-0 opacity-[0.65]">
-              <defs>
-                <radialGradient id="orb" cx="50%" cy="50%">
-                  <stop offset="0%" stopColor="rgba(32,242,217,.35)" />
-                  <stop offset="100%" stopColor="rgba(11,193,174,0)" />
-                </radialGradient>
-              </defs>
-              <circle cx="260" cy="190" r="140" fill="url(#orb)" />
-              <g fill="none" stroke="rgba(148,163,184,.25)">
-                <ellipse cx="260" cy="190" rx="190" ry="110" />
-                <ellipse cx="260" cy="190" rx="150" ry="86" transform="rotate(18 260 190)" />
-                <ellipse cx="260" cy="190" rx="110" ry="64" transform="rotate(-12 260 190)" />
-              </g>
-            </svg>
+          <div className="relative">
+            <div className="rounded-[28px] border border-white/12 bg-white/5 backdrop-blur p-3 shadow-[0_20px_60px_rgba(0,0,0,0.55)] mx-auto max-w-[520px]">
+              <div className="relative rounded-2xl border border-white/10 h-[300px] lg:h-[380px] flex flex-col items-center justify-center text-white/60 p-6">
+                <div className="h-16 w-16 rounded-full border-2 border-white/50 flex items-center justify-center mb-4">
+                  <div className="h-10 w-10 rounded-full bg-teal-300/30" />
+                </div>
+                <div className="text-xl font-semibold text-white/90">
+                  RAimond HUD Preview
+                </div>
+                <div className="text-sm text-white/60 mt-2 text-center max-w-xs">
+                  Real-time order flow, discipline guardrails, and contextual
+                  coaching
+                </div>
+                <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-white/5" />
+              </div>
+            </div>
           </div>
         </div>
       </div>
