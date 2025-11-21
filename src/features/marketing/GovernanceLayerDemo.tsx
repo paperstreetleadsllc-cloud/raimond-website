@@ -242,8 +242,8 @@ export default function GovernanceLayerDemo() {
                 >
                   {[
                     { label: "Protection Level", value: "Active" },
-                    { label: "Rules Enforced", value: "24/7" },
-                    { label: "Override Blocks", value: "127" }
+                    { label: "Rules Enforced", value: "Always on during sessions" },
+                    { label: "Override Blocks", value: "Documented in session log" }
                   ].map((stat) => (
                     <div key={stat.label} className="glass-card rounded-lg p-5 text-center">
                       <div className="text-xs text-gray-400 mb-2 tracking-wide">{stat.label}</div>

@@ -47,7 +47,7 @@ export function TestimonialsSection() {
       name: "Lisa Thompson",
       role: "Scalper",
       company: "High-Frequency Trading",
-      content: "Sub-12ms execution is not marketing hype—it's real. My fill quality has improved dramatically since switching to RAimond. This is institutional-grade infrastructure.",
+      content: "Execution finally feels consistent instead of reactive. My fill quality has improved because RAImond keeps the playbook accountable in real time.",
       rating: 5,
       avatar: "LT",
     },
@@ -126,27 +126,6 @@ export function TestimonialsSection() {
           ))}
         </div>
 
-        {/* Social Proof Stats */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6"
-        >
-          {[
-            { value: "2,500+", label: "Active Traders" },
-            { value: "$12M+", label: "Daily Volume" },
-            { value: "4.9/5", label: "User Rating" },
-            { value: "98%", label: "Satisfaction Rate" },
-          ].map((stat) => (
-            <div key={stat.label} className="text-center">
-              <div className="text-3xl sm:text-4xl font-bold text-[#1FF0DA] mb-2 font-['Space_Grotesk']">
-                {stat.value}
-              </div>
-              <div className="text-sm text-gray-500">{stat.label}</div>
-            </div>
-          ))}
-        </motion.div>
       </div>
     </section>
   );

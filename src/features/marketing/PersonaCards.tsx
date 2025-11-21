@@ -7,7 +7,7 @@ const personas = [
     tagline: "Precision + Timing",
     description: "Execute with sub-second accuracy in high-frequency environments",
     benefits: [
-      { icon: Zap, text: "Sub-12ms execution alerts" },
+      { icon: Zap, text: "High-frequency execution alerts" },
       { icon: Target, text: "Tick-level entry precision" },
       { icon: Shield, text: "Overtrading guardrails" }
     ],

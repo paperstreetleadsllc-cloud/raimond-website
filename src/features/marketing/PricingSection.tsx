@@ -27,7 +27,7 @@ const plans: Plan[] = [
     features: [
       { icon: TrendingUp, text: "Real-time market data" },
       { icon: Cpu, text: "Basic AI insights" },
-      { icon: Gauge, text: "Up to 50 trades/day" },
+      { icon: Gauge, text: "Daily trade allowance built for active use" },
       { icon: null, text: "Standard execution speeds" },
       { icon: null, text: "Email support" },
       { icon: null, text: "Mobile app access" },
@@ -45,8 +45,8 @@ const plans: Plan[] = [
     features: [
       { icon: null, text: "Everything in Trader, plus:", highlight: true },
       { icon: Cpu, text: "Advanced AI insights with ML models" },
-      { icon: Gauge, text: "Unlimited trades" },
-      { icon: Zap, text: "Priority execution (<12ms)" },
+      { icon: Gauge, text: "No artificial trade caps" },
+      { icon: Zap, text: "Priority routing with dedicated lanes" },
       { icon: Shield, text: "RAimond Governance Engine" },
       { icon: TrendingUp, text: "Advanced order flow intelligence" },
       { icon: null, text: "Priority support" },
@@ -164,27 +164,6 @@ export default function PricingSection() {
             </motion.div>
           ))}
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mt-16 text-center"
-        >
-          <p className="text-gray-400 mb-4">All plans include 14-day free trial. No credit card required.</p>
-          <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-500">
-            {[
-              "Cancel anytime",
-              "No setup fees",
-              "24/7 support"
-            ].map((item) => (
-              <div key={item} className="flex items-center gap-2">
-                <Check size={16} className="text-[#1FF0DA]" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}

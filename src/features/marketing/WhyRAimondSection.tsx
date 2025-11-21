@@ -10,7 +10,7 @@ const reasons = [
   },
   {
     icon: Heart,
-    title: "Discipline is Learnable, Not Innate",
+    title: "Discipline Is Built, Not Born",
     description: "The best traders aren't born—they're built. RAimond accelerates that process with intelligent guardrails.",
     color: "#4a90e2"
   },
@@ -23,7 +23,7 @@ const reasons = [
   {
     icon: TrendingUp,
     title: "Real-Time Context Changes Everything",
-    description: "Static indicators show what happened. RAimond shows what's happening—in the microstructure, in real-time.",
+    description: "Static indicators show what has happened. RAImond shows what's happening in the structure, in the present.",
     color: "#1FF0DA"
   }
 ];

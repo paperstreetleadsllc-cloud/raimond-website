@@ -8,12 +8,6 @@ type HeroSectionProps = {
   onSecondaryCta?: () => void;
 };
 
-const stats = [
-  { label: "Order Accuracy", value: "98.3%" },
-  { label: "Execution Speed", value: "<12ms" },
-  { label: "Market Monitoring", value: "24/7" }
-];
-
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
   show: { opacity: 1, y: 0 }
@@ -71,21 +65,6 @@ export default function HeroSection({ onPrimaryCta, onSecondaryCta }: HeroSectio
             >
               Learn the RAi Method
             </button>
-          </div>
-
-          <div className="grid w-full max-w-xl grid-cols-1 gap-6 border-t border-white/12 pt-8 sm:grid-cols-3">
-            {stats.map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, scale: 0.85 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true, margin: "-120px" }}
-                transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
-              >
-                <div className="text-3xl font-semibold text-[var(--cyber-teal)] font-display">{stat.value}</div>
-                <div className="text-xs uppercase tracking-[0.32em] text-white/45">{stat.label}</div>
-              </motion.div>
-            ))}
           </div>
         </motion.div>
 

@@ -1,4 +1,4 @@
-import { Brain, Target, Shield, Activity, Zap } from "lucide-react";
+import { Brain, Target, Activity, Cable } from "lucide-react";
 import { motion } from "framer-motion";
 
 export function FeaturesSection() {
@@ -22,16 +22,10 @@ export function FeaturesSection() {
       color: "#b794f6",
     },
     {
-      icon: Shield,
-      title: "Market Structure Overlay HUD",
-      description: "See VWAP bands, delta curves, and key liquidity levels overlaid on your charts. Trade with context, not guesswork.",
-      color: "#f093fb",
-    },
-    {
-      icon: Zap,
-      title: "Lightning Execution Layer",
-      description: "Sub-12ms order routing with smart order flow optimization. Get filled at better prices with institutional-grade execution technology.",
-      color: "#ff6b9d",
+      icon: Cable,
+      title: "Broker & Platform Integration",
+      description: "Connect your broker and charting platform so RAImond can watch everything in real time and infer guidance, guardrails, and accountability around your actual trading behavior.",
+      color: "#4a90e2",
     },
   ];
 

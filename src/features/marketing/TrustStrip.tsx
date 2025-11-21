@@ -1,44 +1,41 @@
 import { motion } from "framer-motion";
 
-const partners = [
-  "Voxel Capital",
-  "Aurora Labs",
-  "PrimeX Markets",
-  "Helix Quant",
-  "Equinox Exchange"
-];
-
 export function TrustStrip() {
   return (
     <section
       id="trust"
-      aria-label="Trusted by leading traders"
+      aria-label="Built for independent traders"
       className="relative border-y border-white/5 bg-[var(--night-850)]/90 py-10"
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(31,240,218,0.12),_transparent_70%)] opacity-60" />
-      <div className="relative mx-auto flex w-full max-w-6xl flex-col items-center gap-4 px-6 text-white/60 sm:flex-row sm:justify-between">
+      <div className="relative mx-auto flex w-full max-w-6xl flex-col items-center gap-3 px-6 text-white/70">
         <motion.span
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="text-xs uppercase tracking-[0.36em] text-white/45 sm:text-sm"
         >
-          Trusted by traders deploying RAimond
+          Built for independent traders
         </motion.span>
-        <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-4 text-sm font-medium text-white/70 sm:text-base">
-          {partners.map((partner, index) => (
-            <motion.span
-              key={partner}
-              initial={{ opacity: 0, y: 8 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.05 }}
-              className="transition hover:text-white"
-            >
-              {partner}
-            </motion.span>
-          ))}
-        </div>
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.1 }}
+          className="text-center text-sm leading-relaxed text-white/70 sm:text-base"
+        >
+          Currently in private beta with real futures and options traders, focused on discipline, execution, and real-time
+          context.
+        </motion.p>
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 }}
+          className="text-center text-xs text-white/45 sm:text-sm"
+        >
+          No fake logos. Just honest infrastructure for traders who actually do this for a living.
+        </motion.p>
       </div>
     </section>
   );
