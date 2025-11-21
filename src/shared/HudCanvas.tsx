@@ -1,4 +1,4 @@
-﻿import React, {useRef, useEffect} from "react";
+import React, {useRef, useEffect} from "react";
 
 /** Futuristic HUD canvas: pulsing rings + floating particles */
 export default function HudCanvas({ className = "" }: { className?: string }){
@@ -72,3 +72,4 @@ export default function HudCanvas({ className = "" }: { className?: string }){
 
   return <canvas ref={ref} className={className} style={{width:"100%",height:"100%",display:"block"}}/>;
 }
+

@@ -45,8 +45,8 @@ export default function Button({
 
   const styles =
     variant === "primary"
-      ? "text-slate-900 bg-gradient-to-r from-teal-300 to-emerald-400 hover:from-teal-200 hover:to-emerald-300 shadow-[0_10px_30px_rgba(16,185,129,.35)]"
-      : "border border-teal-400/40 text-teal-200 hover:bg-teal-400/10";
+      ? "text-slate-900 bg-[#1FF0DA] hover:bg-[#59f6e4] shadow-[0_8px_30px_rgba(31,240,218,0.45)] hover:shadow-[0_12px_36px_rgba(31,240,218,0.6)] focus-visible:ring-[#1FF0DA]/60"
+      : "border border-[#1FF0DA]/40 text-[#1FF0DA] hover:bg-[#1FF0DA]/10";
 
   const url =
     emailTo
@@ -59,3 +59,4 @@ export default function Button({
     </a>
   );
 }
+

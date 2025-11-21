@@ -1,4 +1,4 @@
-﻿export default function Terms() {
+export default function Terms() {
   return (
     <section className="pt-28 pb-20">
       <div className="section prose prose-invert max-w-3xl">
@@ -25,3 +25,4 @@
     </section>
   );
 }
+

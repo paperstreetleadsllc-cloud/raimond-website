@@ -26,7 +26,7 @@ export default function AnimatedBackground({ className = "" }: { className?: str
 
     // particles in soft orbits
     const P = 120;
-    const dots = Array.from({ length: P }).map((_, i) => {
+    const dots = Array.from({ length: P }).map(() => {
       const r = 30 + Math.random() * 260;       // orbit radius
       const a = Math.random() * Math.PI * 2;    // angle
       const s = 0.001 + Math.random() * 0.004;  // speed
@@ -98,3 +98,4 @@ export default function AnimatedBackground({ className = "" }: { className?: str
     </div>
   );
 }
+

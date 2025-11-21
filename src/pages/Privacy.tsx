@@ -1,4 +1,4 @@
-﻿export default function Privacy() {
+export default function Privacy() {
   return (
     <section className="pt-28 pb-20">
       <div className="section prose prose-invert max-w-3xl">
@@ -32,3 +32,4 @@
     </section>
   );
 }
+

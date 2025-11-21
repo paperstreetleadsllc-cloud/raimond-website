@@ -1,4 +1,4 @@
-﻿import { posts } from "../content/posts";
+import { posts } from "../content/posts";
 
 export default function JournalPage() {
   const items = [...posts].sort((a,b) => (a.date < b.date ? 1 : -1));
@@ -22,3 +22,4 @@ export default function JournalPage() {
     </section>
   );
 }
+

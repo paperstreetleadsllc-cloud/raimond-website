@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 
 /** Compact teal icon for favicon/buttons */
 export default function LogoMark({ className = "" }: { className?: string }) {
@@ -17,3 +17,4 @@ export default function LogoMark({ className = "" }: { className?: string }) {
     </svg>
   );
 }
+

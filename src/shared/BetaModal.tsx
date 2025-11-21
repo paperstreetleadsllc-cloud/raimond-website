@@ -1,4 +1,4 @@
-﻿import React, { useState } from "react";
+import React, { useState } from "react";
 
 export default function BetaModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [name, setName] = useState("");
@@ -80,3 +80,4 @@ export default function BetaModal({ open, onClose }: { open: boolean; onClose: (
     </div>
   );
 }
+

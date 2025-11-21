@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 
 /**
  * RAImond heavy/edgy wordmark
@@ -62,3 +62,4 @@ export default function LogoWordHeavy({ className = "" }: { className?: string }
     </div>
   );
 }
+

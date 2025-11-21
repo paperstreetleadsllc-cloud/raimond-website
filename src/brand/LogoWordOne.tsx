@@ -37,3 +37,4 @@ export default function LogoWordOne({ className = "" }: { className?: string }) 
     </div>
   );
 }
+
