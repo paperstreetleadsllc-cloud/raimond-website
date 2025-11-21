@@ -4,6 +4,8 @@ dist/
 .vscode/
 .env
 .env.*
+!/.env.development
+!/.env.production
 !**/.env.example
 !**/.env.local.example
 .vercel

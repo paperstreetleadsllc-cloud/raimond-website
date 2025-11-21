@@ -17,44 +17,68 @@ import Privacy from "./pages/Privacy";
 import TradingOsPage from "./pages/TradingOsPage";
 import Terms from "./pages/Terms";
 import LoadingScreen from "./shared/LoadingScreen";
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-    children: [
-      { index: true, element: <Home /> },
-      {
-        path: "app",
-        element: (
-          <ProtectedRoute>
-            <TradingOsPage />
-          </ProtectedRoute>
-        )
-      },
-      { path: "journal", element: <JournalPage /> },
-      { path: "privacy", element: <Privacy /> },
-      { path: "terms", element: <Terms /> }
-    ]
-  },
-  { path: "/login", element: <Login /> }
-]);
+import ComingSoon from "./pages/ComingSoon";
 
 function Root() {
   const [isLoading, setIsLoading] = React.useState(true);
-  const hasResolvedRef = React.useRef(false);
   const timeoutRef = React.useRef<number>();
   const fallbackRef = React.useRef<number>();
+  const marketingOnly = React.useMemo(
+    () => (import.meta.env.VITE_MARKETING_ONLY ?? "false") === "true",
+    []
+  );
+
+  const router = React.useMemo(
+    () =>
+      createBrowserRouter([
+        {
+          path: "/",
+          element: <App />,
+          children: [
+            { index: true, element: <Home /> },
+            {
+              path: "app",
+              element: marketingOnly ? (
+                <ComingSoon />
+              ) : (
+                <ProtectedRoute>
+                  <TradingOsPage />
+                </ProtectedRoute>
+              )
+            },
+            {
+              path: "dashboard",
+              element: marketingOnly ? (
+                <ComingSoon />
+              ) : (
+                <ProtectedRoute>
+                  <TradingOsPage />
+                </ProtectedRoute>
+              )
+            },
+            { path: "journal", element: <JournalPage /> },
+            { path: "privacy", element: <Privacy /> },
+            { path: "terms", element: <Terms /> }
+          ]
+        },
+        {
+          path: "/login",
+          element: marketingOnly ? <ComingSoon /> : <Login />
+        }
+      ]),
+    [marketingOnly]
+  );
 
   React.useEffect(() => {
     const MIN_DURATION = 1700;
     const startTime = performance.now();
+    let resolved = false;
 
     const resolve = () => {
-      if (hasResolvedRef.current) {
+      if (resolved) {
         return;
       }
-      hasResolvedRef.current = true;
+      resolved = true;
       const elapsed = performance.now() - startTime;
       const remaining = Math.max(MIN_DURATION - elapsed, 0);
       timeoutRef.current = window.setTimeout(() => {
@@ -68,9 +92,7 @@ function Root() {
       window.addEventListener("load", resolve);
     }
 
-    fallbackRef.current = window.setTimeout(() => {
-      resolve();
-    }, MIN_DURATION + 1200);
+    fallbackRef.current = window.setTimeout(resolve, MIN_DURATION + 1200);
 
     return () => {
       window.removeEventListener("load", resolve);

@@ -21,6 +21,7 @@ export default function Header({ onOpenWaitlist }: HeaderProps) {
   const navigate = useNavigate();
   const location = useLocation();
   const { isAuthenticated, logout } = useAuth();
+  const marketingOnly = (import.meta.env.VITE_MARKETING_ONLY ?? "false") === "true";
 
   const handleSignOut = React.useCallback(() => {
     logout();
@@ -48,7 +49,16 @@ export default function Header({ onOpenWaitlist }: HeaderProps) {
       }`}
     >
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-5 py-4 md:px-10 md:py-5">
-        <Link to="/" className="flex items-center gap-3 text-white">
+        <Link
+          to={marketingOnly ? "/" : "/"}
+          className="flex items-center gap-3 text-white"
+          onClick={(event) => {
+            if (marketingOnly && location.pathname !== "/") {
+              event.preventDefault();
+              navigate("/", { replace: false });
+            }
+          }}
+        >
           <LogoWord className="h-auto" />
         </Link>
 
@@ -72,7 +82,7 @@ export default function Header({ onOpenWaitlist }: HeaderProps) {
         </nav>
 
         <div className="hidden items-center gap-4 lg:flex">
-          {isAuthenticated ? (
+          {!marketingOnly && isAuthenticated ? (
             <>
               <Link
                 to="/app"
@@ -88,14 +98,14 @@ export default function Header({ onOpenWaitlist }: HeaderProps) {
                 Sign out
               </button>
             </>
-          ) : (
+          ) : !marketingOnly ? (
             <Link
               to="/login"
               className="text-sm font-semibold text-white/75 transition hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/25"
             >
               Sign in
             </Link>
-          )}
+          ) : null}
           <button
             type="button"
             onClick={handleWaitlistOpen}
