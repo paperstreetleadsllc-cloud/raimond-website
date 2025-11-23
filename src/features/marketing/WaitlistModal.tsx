@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { CheckCircle2, Loader2, X } from "lucide-react";
 
 type WaitlistModalProps = {
@@ -33,6 +34,7 @@ export default function WaitlistModal({ open, onClose }: WaitlistModalProps) {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const firstFieldRef = useRef<HTMLInputElement | null>(null);
   const previousOverflow = useRef<string>("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
@@ -122,6 +124,8 @@ export default function WaitlistModal({ open, onClose }: WaitlistModalProps) {
     return Object.keys(nextErrors).length === 0;
   };
 
+  // This form POSTs to the waitlist endpoint (defaults to /api/waitlist). Before we introduced that handler,
+  // production builds returned 404 from Vercel and surfaced the generic “Something went wrong” banner.
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -137,9 +141,7 @@ export default function WaitlistModal({ open, onClose }: WaitlistModalProps) {
         name: form.name.trim(),
         email: form.email.trim().toLowerCase(),
         traderType: form.traderType,
-        goal: form.goal.trim(),
-        source: "website-landing",
-        createdAt: new Date().toISOString()
+        goal: form.goal.trim()
       };
 
       const response = await fetch(endpoint, {
@@ -147,7 +149,14 @@ export default function WaitlistModal({ open, onClose }: WaitlistModalProps) {
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(payload)
+        body: JSON.stringify({
+          fullName: payload.name,
+          email: payload.email,
+          traderType: payload.traderType,
+          goal: payload.goal,
+          source: "website-landing-modal",
+          createdAt: new Date().toISOString()
+        })
       });
 
       if (!response.ok) {
@@ -156,8 +165,15 @@ export default function WaitlistModal({ open, onClose }: WaitlistModalProps) {
         throw new Error(message);
       }
 
-      setStatus("success");
       setForm(defaultFormState);
+      onClose();
+      navigate("/thank-you", {
+        state: {
+          name: payload.name,
+          email: payload.email
+        }
+      });
+      setStatus("idle");
     } catch (error) {
       console.error("Failed to submit waitlist form", error);
       setStatus("error");

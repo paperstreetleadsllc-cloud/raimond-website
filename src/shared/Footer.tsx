@@ -14,6 +14,14 @@ export default function Footer() {
             <a href="/privacy" className="text-slate-400 hover:text-teal-300 transition">Privacy</a>
             <a href="/terms" className="text-slate-400 hover:text-teal-300 transition">Terms</a>
             <a href="mailto:support@raimondai.com" className="text-slate-400 hover:text-teal-300 transition">Contact</a>
+            <a
+              href="https://x.com/RAimond_Ai"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-slate-400 hover:text-teal-300 transition"
+            >
+              X (Twitter)
+            </a>
           </nav>
         </div>
       </div>
