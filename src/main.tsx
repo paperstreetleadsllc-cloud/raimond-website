@@ -18,6 +18,8 @@ import TradingOsPage from "./pages/TradingOsPage";
 import Terms from "./pages/Terms";
 import LoadingScreen from "./shared/LoadingScreen";
 import ComingSoon from "./pages/ComingSoon";
+import SignupPage from "./pages/Signup";
+import ThankYouPage from "./pages/ThankYou";
 
 function Root() {
   const [isLoading, setIsLoading] = React.useState(true);
@@ -36,6 +38,8 @@ function Root() {
           element: <App />,
           children: [
             { index: true, element: <Home /> },
+            { path: "signup", element: <SignupPage /> },
+            { path: "thank-you", element: <ThankYouPage /> },
             {
               path: "app",
               element: marketingOnly ? (
