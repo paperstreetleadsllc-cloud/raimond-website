@@ -19,6 +19,7 @@
     "dependencies": {
         "@fontsource-variable/inter": "5.2.8",
         "@fontsource/space-grotesk": "5.2.10",
+        "@supabase/supabase-js": "^2.84.0",
         "framer-motion": "^11.3.30",
         "lucide-react": "^0.453.0",
         "react": "^18.3.1",

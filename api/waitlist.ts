@@ -1,3 +1,4 @@
+import { createClient } from "@supabase/supabase-js";
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 
 type WaitlistBody = {
@@ -15,9 +16,29 @@ function normaliseName(body: WaitlistBody) {
   return body.fullName?.trim() || body.name?.trim() || "";
 }
 
-export default function handler(req: VercelRequest, res: VercelResponse) {
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+if (!supabaseUrl || !supabaseServiceRoleKey) {
+  console.error("Missing Supabase configuration in environment variables.");
+}
+
+const supabase =
+  supabaseUrl && supabaseServiceRoleKey
+    ? createClient(supabaseUrl, supabaseServiceRoleKey)
+    : null;
+
+export default async function handler(
+  req: VercelRequest,
+  res: VercelResponse
+) {
   if (req.method !== "POST") {
     res.status(405).json({ ok: false, error: "Method not allowed" });
+    return;
+  }
+
+  if (!supabase) {
+    res.status(500).json({ error: "Supabase not configured" });
     return;
   }
 
@@ -43,7 +64,38 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
     createdAt
   });
 
-  res.status(200).json({ ok: true });
+  try {
+    const { error } = await supabase
+      .from("waitlist_leads")
+      .insert({
+        full_name: fullName,
+        email,
+        trader_type: traderType || null,
+        goal: goal || null,
+        created_at: createdAt
+      })
+      .select()
+      .single();
+
+    if (error) {
+      console.error("Supabase insert error:", error);
+      res.status(500).json({ error: "Failed to save waitlist entry" });
+      return;
+    }
+
+    console.log("RAImond waitlist lead stored", {
+      email
+    });
+
+    res.status(200).json({ ok: true });
+  } catch (err) {
+    console.error("Unexpected waitlist handler error:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
 }
+
+
+
+
 
 
