@@ -1,5 +1,10 @@
 # RAimond Marketing & Trading OS
 
+## Repo scope
+- This repository is for the RAimond website (Vite/React) only.
+- Do not copy unrelated projects into this folder.
+- If you need a separate backend/project, create a separate repo folder.
+
 ## How to run the app
 - Install dependencies with `npm install`
 - Start the Vite dev server: `npm run dev`

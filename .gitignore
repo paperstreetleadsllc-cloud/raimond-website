@@ -10,3 +10,5 @@ dist/
 !**/.env.local.example
 .vercel
 .next/
+server/node_modules/
+server/.env*
