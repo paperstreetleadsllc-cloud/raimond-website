@@ -1,6 +1,6 @@
 {
-  "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/$1" },
-    { "source": "/(.*)", "destination": "/index.html" }
-  ]
+  "installCommand": "npm install",
+  "buildCommand": "npm run build -w apps/aeo-web",
+  "outputDirectory": "apps/aeo-web/dist",
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }

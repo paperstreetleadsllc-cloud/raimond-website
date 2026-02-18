@@ -1,0 +1,27 @@
+[
+  {
+    "id": "audit_3d5c24b208f8d43b",
+    "siteId": "site_a64c3f04fb64d595",
+    "score": 72,
+    "totalScore": 72,
+    "status": "completed",
+    "findings": [
+      "Add more explicit product schema markup.",
+      "Increase answer-targeted FAQ depth for key intents."
+    ],
+    "topWinningQueries": [
+      "life insurance quote",
+      "term life insurance guide"
+    ],
+    "weakAreas": [
+      "comparison",
+      "trust-legitimacy"
+    ],
+    "competitorGap": "Competitor benchmark pending",
+    "recommendedActions": [
+      "Publish trust and licensing proofs.",
+      "Expand comparison-focused service pages."
+    ],
+    "createdAt": "2026-01-01T00:00:00.000Z"
+  }
+]
