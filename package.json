@@ -14,6 +14,7 @@
         "lint": "eslint ./src --ext ts,tsx --max-warnings=0",
         "typecheck": "tsc --noEmit",
         "test": "vitest run",
+        "check": "npm run lint && npm test",
         "test:watch": "vitest"
     },
     "dependencies": {

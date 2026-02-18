@@ -6,6 +6,7 @@
 - If you need a separate backend/project, create a separate repo folder.
 
 ## How to run the app
+- Use Node 20 via nvm-windows (`nvm use 20.19.0`).
 - Install dependencies with `npm install`
 - Start the Vite dev server: `npm run dev`
 - The site mounts at `http://localhost:5173` by default
