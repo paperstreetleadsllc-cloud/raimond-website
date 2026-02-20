@@ -35,53 +35,26 @@ For local development (not production), use a local override file in `apps/aeo-w
 
 - `.env.local` with `VITE_AEO_API=http://localhost:4000`
 
-### Vercel copy/paste checklist (two separate SPAs)
+### Vercel: two-project setup (Root Directory per app)
 
-> [!WARNING]
-> Vercel ignores `vercel.aeo-marketing.json` and `vercel.aeo-web.json`.
-> These files are reference-only templates.
-> You must copy these settings into the Vercel UI for each project.
->
-> If `npm run verify:workspaces` fails during Vercel build, the connected repository or
-> project Root Directory is wrong. Point Vercel at this monorepo root.
+Project A (Marketing):
+- Repo: paperstreetleadsllc-cloud/raimond-website
+- Root Directory: apps/aeo-marketing
+- Framework preset: Vite
+- Install: npm install
+- Build: npm run build
+- Output: dist
+- Rewrites: /(.*) -> /index.html
+- Env: VITE_AEO_API=https://api.paperstreetleads.com (and VITE_CALENDLY_URL if used)
+- Domain: paperstreetleads.com + www.paperstreetleads.com (if desired)
 
-#### Project 1 checklist: `paperstreetleads-marketing` (`paperstreetleads.com`)
+Project B (Dashboard):
+- Root Directory: apps/aeo-web
+- same build/output/rewrite settings
+- Env: VITE_AEO_API=https://api.paperstreetleads.com
+- Domain: app.paperstreetleads.com
 
-- [ ] Create project in Vercel from this repo (`life-insurance-site`)
-- [ ] In **General**:
-  - **Project Name**: `paperstreetleads-marketing`
-  - **Root Directory**: `.`
-- [ ] In **Build and Output Settings**:
-  - **Framework Preset**: `Vite`
-  - **Install Command**: `npm install`
-  - **Build Command**: `npm run build -w apps/aeo-marketing`
-  - **Output Directory**: `apps/aeo-marketing/dist`
-- [ ] In **Environment Variables**:
-  - `VITE_AEO_API=https://api.paperstreetleads.com`
-- [ ] In **Domains**:
-  - Add `paperstreetleads.com`
-- [ ] In **Project Settings -> Rewrites** add SPA fallback:
-  - **Source**: `/(.*)`
-  - **Destination**: `/index.html`
-
-#### Project 2 checklist: `paperstreetleads-app` (`app.paperstreetleads.com`)
-
-- [ ] Create project in Vercel from this repo (`life-insurance-site`)
-- [ ] In **General**:
-  - **Project Name**: `paperstreetleads-app`
-  - **Root Directory**: `.`
-- [ ] In **Build and Output Settings**:
-  - **Framework Preset**: `Vite`
-  - **Install Command**: `npm install`
-  - **Build Command**: `npm run build -w apps/aeo-web`
-  - **Output Directory**: `apps/aeo-web/dist`
-- [ ] In **Environment Variables**:
-  - `VITE_AEO_API=https://api.paperstreetleads.com`
-- [ ] In **Domains**:
-  - Add `app.paperstreetleads.com`
-- [ ] In **Project Settings -> Rewrites** add SPA fallback:
-  - **Source**: `/(.*)`
-  - **Destination**: `/index.html`
+If the Vercel UI build settings won’t change, check for a repo-root vercel.json overriding them.
 
 ### API (`api.paperstreetleads.com`, `apps/aeo-api`)
 
