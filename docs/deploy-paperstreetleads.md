@@ -35,19 +35,53 @@ For local development (not production), use a local override file in `apps/aeo-w
 
 - `.env.local` with `VITE_AEO_API=http://localhost:4000`
 
-### Vercel project settings for `paperstreetleads.com`
+### Vercel copy/paste checklist (two separate SPAs)
 
-To make sure Vercel serves only the AEO web app (not the RAImond root app):
+> [!WARNING]
+> Vercel ignores `vercel.aeo-marketing.json` and `vercel.aeo-web.json`.
+> These files are reference-only templates.
+> You must copy these settings into the Vercel UI for each project.
+>
+> If `npm run verify:workspaces` fails during Vercel build, the connected repository or
+> project Root Directory is wrong. Point Vercel at this monorepo root.
 
-- Project repository must be `life-insurance-site` (this repo).
-- Root Directory: leave blank or set to repo root (the root `vercel.json` controls build/output).
-- Framework preset: `Vite`
-- Install command: `npm install`
-- Build command: `npm run build -w apps/aeo-web`
-- Output directory: `apps/aeo-web/dist`
-- Environment variable: `VITE_AEO_API=https://api.paperstreetleads.com`
+#### Project 1 checklist: `paperstreetleads-marketing` (`paperstreetleads.com`)
 
-SPA routing for AEO pages (`/sites`, `/pricing`, `/sites/:id/audit`) is handled by the root `vercel.json` rewrite to `index.html`.
+- [ ] Create project in Vercel from this repo (`life-insurance-site`)
+- [ ] In **General**:
+  - **Project Name**: `paperstreetleads-marketing`
+  - **Root Directory**: `.`
+- [ ] In **Build and Output Settings**:
+  - **Framework Preset**: `Vite`
+  - **Install Command**: `npm install`
+  - **Build Command**: `npm run build -w apps/aeo-marketing`
+  - **Output Directory**: `apps/aeo-marketing/dist`
+- [ ] In **Environment Variables**:
+  - `VITE_AEO_API=https://api.paperstreetleads.com`
+- [ ] In **Domains**:
+  - Add `paperstreetleads.com`
+- [ ] In **Project Settings -> Rewrites** add SPA fallback:
+  - **Source**: `/(.*)`
+  - **Destination**: `/index.html`
+
+#### Project 2 checklist: `paperstreetleads-app` (`app.paperstreetleads.com`)
+
+- [ ] Create project in Vercel from this repo (`life-insurance-site`)
+- [ ] In **General**:
+  - **Project Name**: `paperstreetleads-app`
+  - **Root Directory**: `.`
+- [ ] In **Build and Output Settings**:
+  - **Framework Preset**: `Vite`
+  - **Install Command**: `npm install`
+  - **Build Command**: `npm run build -w apps/aeo-web`
+  - **Output Directory**: `apps/aeo-web/dist`
+- [ ] In **Environment Variables**:
+  - `VITE_AEO_API=https://api.paperstreetleads.com`
+- [ ] In **Domains**:
+  - Add `app.paperstreetleads.com`
+- [ ] In **Project Settings -> Rewrites** add SPA fallback:
+  - **Source**: `/(.*)`
+  - **Destination**: `/index.html`
 
 ### API (`api.paperstreetleads.com`, `apps/aeo-api`)
 
@@ -56,9 +90,12 @@ Set in your API host project settings:
 - `NODE_ENV=production`
 - `API_HOST=0.0.0.0`
 - `API_PORT` from your platform (or fixed if required)
-- `FRONTEND_APP_URL=https://app.paperstreetleads.com`
+- `APP_URL=https://app.paperstreetleads.com`
 - Billing vars if used:
   - `STRIPE_SECRET_KEY`
+  - `STRIPE_PRICE_STARTER`
+  - `STRIPE_PRICE_PRO`
+  - `STRIPE_PRICE_AGENCY`
   - `STRIPE_WEBHOOK_SECRET`
 
 CORS behavior in API:
