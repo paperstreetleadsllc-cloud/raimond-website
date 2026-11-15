@@ -58,7 +58,8 @@ It is preserved under `legacy/aeo-prototype` for reference (the Stripe routes ar
 - [ ] Research each provider's official API and access terms
 - [ ] Provider adapter interface and observation storage
 - [ ] First genuinely supported observation source
-- [ ] Mention, recommendation, citation, and competitor detection
+- [x] Observation record and provider adapter interface (`src/lib/visibility/types.ts`)
+- [x] Mention, recommendation, citation, and competitor detection (`src/lib/visibility/detect.ts`), tested; not yet connected to any provider
 - [ ] Evidence display with sample size and dates
 
 ### Later phases

@@ -10,11 +10,12 @@
 | robots.txt matching, AI crawler detection, sitemap parsing, HTML extraction | `tests/robots-extract.test.ts` |
 | Full pipeline: good site, weak site, redirects, unreachable site, http fallback, error status, robots disallow, robots error, non-HTML, large site, slow pages, broken links, oversized pages, custom scoring, determinism | `tests/pipeline.test.ts` |
 | Duplicate and concurrent audits, rate limits, failure recording, stalled audits, database failure, missing credentials, free-tier limits | `tests/service.test.ts` |
+| Visibility detection: mention, narrow recommendation rule, citation, competitors, look-alike domains, empty samples | `tests/visibility-detect.test.ts` |
 | Results dashboard renders from real pipeline output; no platform shows a figure | `tests/report-render.test.tsx` |
 
 ## Latest run (2026-11-15, development sandbox)
 
-- Automated tests: 102 passed, 0 failed.
+- Automated tests: 111 passed, 0 failed.
 - Type check: passed.
 - Production build: passed.
 - Local server: all pages returned 200; invalid, SSRF, cross-origin, honeypot, rate-limit, and lead requests behaved as designed.
