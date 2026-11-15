@@ -8,6 +8,8 @@ Supabase Postgres. Migrations live in `supabase/migrations` and are additive.
 
 **`audit_leads`**: report requests. `audit_id`, `email`, `name`, `ip_hash`. Unique on `(audit_id, email)`.
 
+**`billing_customers`**, **`stripe_webhook_events`**: see [AUTH_BILLING.md](AUTH_BILLING.md).
+
 **`waitlist_leads`**: pre-existing, from the trading site. Not modified.
 
 Row-level security is enabled on the new tables with no policies; access is server-only.

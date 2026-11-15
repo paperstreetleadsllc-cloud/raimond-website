@@ -10,3 +10,4 @@ dist/
 .data/
 next-env.d.ts
 *.tsbuildinfo
+legacy-billing-review.json

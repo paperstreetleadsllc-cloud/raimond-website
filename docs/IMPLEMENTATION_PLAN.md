@@ -63,8 +63,10 @@ It is preserved under `legacy/aeo-prototype` for reference (the Stripe routes ar
 - [ ] Evidence display with sample size and dates
 
 ### Later phases
-- [ ] 4: Accounts, organizations, tenant isolation, audit history
-- [ ] 5: Stripe (test mode), plans, entitlements, usage limits
+- [x] 4a: Supabase Auth (sign-up, verification, login, reset, protected dashboard). Not yet run against the hosted project
+- [ ] 4b: Organizations, saved websites, audit history
+- [x] 5a: Stripe checkout, portal, and webhooks tied to user ids (test mode only). Not yet run against Stripe
+- [ ] 5b: Entitlements and usage limits; $99 one-time audit
 - [ ] 6: Agents on durable workflows
 - [ ] 7: Recurring optimization and reporting
 - [ ] 8: Prospecting, CRM, content pipeline
