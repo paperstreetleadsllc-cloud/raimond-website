@@ -66,6 +66,42 @@ export async function requestAudit(input: string, ip: string): Promise<{ audit: 
   return { audit, reused: false };
 }
 
+/**
+ * Saves an audit to a user's account. `userId` must come from a session the
+ * server verified, never from the request body. Failure is logged, not thrown:
+ * the audit itself must not fail because it could not be saved to an account.
+ */
+export async function saveAuditForUser(userId: string, auditId: string): Promise<boolean> {
+  try {
+    await getStore().saveUserAudit(userId, auditId);
+    return true;
+  } catch (err) {
+    console.error(JSON.stringify({ event: "save_user_audit_error", detail: String(err) }));
+    return false;
+  }
+}
+
+export interface SavedAuditSummary {
+  id: string;
+  site: string;
+  status: AuditRecord["status"];
+  score: number | null;
+  businessName: string | null;
+  createdAt: string;
+}
+
+export async function listSavedAudits(userId: string, limit = 25): Promise<SavedAuditSummary[]> {
+  const records = await getStore().listUserAudits(userId, limit);
+  return records.map((r) => ({
+    id: r.id,
+    site: r.siteKey,
+    status: r.status,
+    score: r.result ? Math.round(r.result.readiness.score) : null,
+    businessName: r.result?.business.name?.value ?? null,
+    createdAt: r.createdAt,
+  }));
+}
+
 export function isStale(audit: AuditRecord): boolean {
   if (audit.status !== "queued" && audit.status !== "running") return false;
   return Date.now() - new Date(audit.updatedAt).getTime() > FREE_LIMITS.staleAfterMs;

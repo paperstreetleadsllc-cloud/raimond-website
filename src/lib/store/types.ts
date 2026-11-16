@@ -29,6 +29,10 @@ export interface AuditStore {
   countByIpSince(ipHash: string, sinceIso: string): Promise<number>;
   countSince(sinceIso: string): Promise<number>;
   saveLead(lead: LeadInput): Promise<void>;
+  /** Records that a verified user ran or opened this audit. Safe to call twice. */
+  saveUserAudit(userId: string, auditId: string): Promise<void>;
+  /** A user's saved audits, newest first. */
+  listUserAudits(userId: string, limit: number): Promise<AuditRecord[]>;
 }
 
 export class StoreNotConfiguredError extends Error {

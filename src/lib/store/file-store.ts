@@ -70,4 +70,25 @@ export class FileStore implements AuditStore {
     await fs.mkdir(this.dir, { recursive: true });
     await fs.appendFile(path.join(this.dir, "leads.jsonl"), `${JSON.stringify({ ...lead, createdAt: new Date().toISOString() })}\n`);
   }
+
+  private linksFile() {
+    return path.join(this.dir, "user-audits.jsonl");
+  }
+
+  private async links(): Promise<{ userId: string; auditId: string; createdAt: string }[]> {
+    const raw = await fs.readFile(this.linksFile(), "utf8").catch(() => "");
+    return raw.split("\n").filter(Boolean).map((line) => JSON.parse(line));
+  }
+
+  async saveUserAudit(userId: string, auditId: string) {
+    if ((await this.links()).some((l) => l.userId === userId && l.auditId === auditId)) return;
+    await fs.mkdir(this.dir, { recursive: true });
+    await fs.appendFile(this.linksFile(), `${JSON.stringify({ userId, auditId, createdAt: new Date().toISOString() })}\n`);
+  }
+
+  async listUserAudits(userId: string, limit: number) {
+    const mine = (await this.links()).filter((l) => l.userId === userId).reverse().slice(0, limit);
+    const records = await Promise.all(mine.map((l) => this.getAudit(l.auditId)));
+    return records.filter((r): r is AuditRecord => r !== null);
+  }
 }

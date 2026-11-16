@@ -6,6 +6,7 @@ import { billingDeps } from "@/lib/billing/context";
 import { PLAN_KEYS, priceAllowlist } from "@/lib/billing/plans";
 import { syncCustomer } from "@/lib/billing/service";
 import { PLANS } from "@/lib/plans";
+import { listSavedAudits, type SavedAuditSummary } from "@/lib/service";
 import { createSessionClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = { title: "Dashboard", robots: { index: false, follow: false } };
@@ -48,6 +49,13 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
     } catch (err) {
       console.error(JSON.stringify({ event: "dashboard_sync_error", detail: String(err) }));
     }
+  }
+
+  let saved: SavedAuditSummary[] = [];
+  try {
+    saved = await listSavedAudits(user.id);
+  } catch (err) {
+    console.error(JSON.stringify({ event: "dashboard_audits_error", detail: String(err) }));
   }
 
   const status = billing?.subscription_status ?? "none";
@@ -93,7 +101,27 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
 
         <section className="card p-6 sm:p-8">
           <h2 className="text-2xl font-semibold">Your audits</h2>
-          <p className="mt-2 text-slate-600">Saved audits and monitoring will appear here. For now, run a free audit any time.</p>
+          {saved.length === 0 ? (
+            <p className="mt-2 text-slate-600">Audits you run while signed in are saved here.</p>
+          ) : (
+            <div className="mt-4 overflow-x-auto">
+              <table className="w-full text-left text-[15px]">
+                <thead className="text-slate-500">
+                  <tr><th className="py-2 pr-4 font-medium">Website</th><th className="py-2 pr-4 font-medium">Readiness score</th><th className="py-2 pr-4 font-medium">Date</th><th className="py-2 font-medium"><span className="sr-only">Open</span></th></tr>
+                </thead>
+                <tbody>
+                  {saved.map((a) => (
+                    <tr key={a.id} className="border-t border-slate-200">
+                      <td className="py-3 pr-4"><span className="font-medium text-ink">{a.businessName ?? a.site}</span>{a.businessName ? <span className="block text-sm text-slate-500">{a.site}</span> : null}</td>
+                      <td className="py-3 pr-4">{a.score !== null ? `${a.score} / 100` : a.status === "failed" ? "Could not be audited" : "In progress"}</td>
+                      <td className="py-3 pr-4">{new Date(a.createdAt).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}</td>
+                      <td className="py-3"><a className="underline" href={`/audit/${a.id}`}>View report</a></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
           <a href="/audit" className="btn-primary mt-4">Run a free audit</a>
         </section>
       </div>
