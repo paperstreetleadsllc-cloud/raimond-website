@@ -96,6 +96,25 @@ function collectSchema(value: unknown, out: SchemaItem[], depth = 0): void {
 }
 
 /** Extracts everything the audit needs from one HTML document. No network access. */
+/** Hosted booking and request tools that service businesses link to instead of an on-site form. */
+const BOOKING_HOSTS: [string, string][] = [
+  ["housecallpro.com", "Housecall Pro"],
+  ["servicetitan.com", "ServiceTitan"],
+  ["getjobber.com", "Jobber"],
+  ["calendly.com", "Calendly"],
+  ["acuityscheduling.com", "Acuity Scheduling"],
+  ["squareup.com", "Square Appointments"],
+  ["square.site", "Square Appointments"],
+  ["schedulista.com", "Schedulista"],
+  ["setmore.com", "Setmore"],
+  ["zocdoc.com", "Zocdoc"],
+  ["vagaro.com", "Vagaro"],
+  ["booksy.com", "Booksy"],
+  ["opentable.com", "OpenTable"],
+  ["fieldpulse.com", "FieldPulse"],
+  ["workiz.com", "Workiz"],
+];
+
 export function extractPage(
   url: string,
   html: string,
@@ -136,6 +155,7 @@ export function extractPage(
   const phones = new Set<string>();
   const emails = new Set<string>();
   let externalLinkCount = 0;
+  let bookingProvider: string | null = null;
   let hasTelLink = false;
   let hasPrivacyLink = false;
 
@@ -170,6 +190,8 @@ export function extractPage(
       externalLinkCount++;
       const full = `${abs.hostname.replace(/^www\./, "")}${abs.pathname}`;
       if (SOCIAL_HOSTS.some((h) => full.includes(h))) socialLinks.add(abs.toString());
+      const booking = BOOKING_HOSTS.find(([h]) => abs.hostname === h || abs.hostname.endsWith(`.${h}`));
+      if (booking && !bookingProvider) bookingProvider = booking[1];
     }
   });
 
@@ -241,6 +263,7 @@ export function extractPage(
     emails: [...emails].slice(0, 5),
     hasTelLink,
     hasForm,
+    bookingProvider,
     hasPrivacyLink,
     imagesTotal,
     imagesWithAlt,

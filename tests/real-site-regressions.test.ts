@@ -39,3 +39,17 @@ describe("coreBusinessName", () => {
     expect(coreBusinessName("")).toBe("");
   });
 });
+
+import { extractPage } from "@/lib/audit/extract";
+
+describe("online booking links", () => {
+  const meta = { status: 200, elapsedMs: 10, bytes: 100 };
+  it("recognises a hosted booking tool as a way to make contact", () => {
+    const html = `<html><body><a href="https://book.housecallpro.com/book/Acme/abc">Request Service</a></body></html>`;
+    expect(extractPage("https://acme.example/", html, meta).bookingProvider).toBe("Housecall Pro");
+  });
+  it("does not match look-alike hosts", () => {
+    const html = `<html><body><a href="https://nothousecallpro.com/x">x</a><a href="https://example.org/calendly.com">y</a></body></html>`;
+    expect(extractPage("https://acme.example/", html, meta).bookingProvider).toBeNull();
+  });
+});

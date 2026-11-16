@@ -343,8 +343,10 @@ function runChecks(crawl: CrawlResult, business: BusinessProfile): RawCheck[] {
 
   const anyEmail = pages.some((p) => p.emails.length > 0);
   const anyForm = pages.some((p) => p.hasForm);
-  add("contact_method", "identity", "Email or contact form available", anyForm && anyEmail ? 1 : anyForm || anyEmail ? 0.7 : 0, [
-    `Contact form found: ${anyForm ? "yes" : "no"}. Email address link found: ${anyEmail ? "yes" : "no"}.`,
+  const booking = pages.find((p) => p.bookingProvider)?.bookingProvider ?? null;
+  const writtenWays = Number(anyForm || Boolean(booking)) + Number(anyEmail);
+  add("contact_method", "identity", "Email, contact form or online booking available", writtenWays === 2 ? 1 : writtenWays === 1 ? 0.7 : 0, [
+    `Contact form found: ${anyForm ? "yes" : "no"}. Online booking link found: ${booking ? `yes (${booking})` : "no"}. Email address link found: ${anyEmail ? "yes" : "no"}.`,
   ]);
 
   // ---- Trust and credibility --------------------------------------------

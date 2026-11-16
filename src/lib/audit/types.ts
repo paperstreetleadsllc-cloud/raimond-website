@@ -86,6 +86,8 @@ export interface PageData {
   emails: string[];
   hasTelLink: boolean;
   hasForm: boolean;
+  /** Name of a hosted booking tool the page links to, if any. Optional so stored audits stay readable. */
+  bookingProvider?: string | null;
   hasPrivacyLink: boolean;
   imagesTotal: number;
   imagesWithAlt: number;

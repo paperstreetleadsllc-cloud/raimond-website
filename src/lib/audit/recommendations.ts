@@ -4,6 +4,7 @@ interface Template {
   title: string;
   problem: string;
   /** Used instead of `problem` when the check earned some credit. */
+  partialTitle?: string;
   partialProblem?: string;
   partialImplementation?: string[];
   partialVerification?: string;
@@ -241,7 +242,9 @@ const TEMPLATES: Record<string, Template> = {
   },
   contact_method: {
     title: "Add a contact form or email link",
-    problem: "We found no contact form and no email link.",
+    problem: "We found no contact form, online booking link or email link.",
+    partialProblem: "Customers have only one written way to reach you.",
+    partialImplementation: ["If you take bookings or requests online, also show an email address or simple form for general questions.", "If you only list an email, add a short request form or booking link.", "Keep the contact details identical on every page."],
     businessImpact: "Visitors who are not ready to call have no way to become a lead.",
     action: "Add a short contact or quote-request form.",
     effort: "Low",
@@ -251,6 +254,7 @@ const TEMPLATES: Record<string, Template> = {
   },
   reviews: {
     title: "Show real customer reviews on the site",
+    partialTitle: "Make your reviews machine-readable",
     problem: "No review or testimonial content was detected.",
     partialProblem: "Reviews are shown on the site, but there is no rating data in structured data for machines to read.",
     businessImpact: "Reviews are a primary signal of quality when a system decides which business to recommend.",
@@ -353,7 +357,7 @@ function toRecommendation(check: CheckResult): Recommendation | null {
   return {
     id: `rec_${check.id}`,
     checkId: check.id,
-    title: template.title,
+    title: partial && template.partialTitle ? template.partialTitle : template.title,
     problem: partial && template.partialProblem ? template.partialProblem : template.problem,
     evidence: check.evidence,
     businessImpact: template.businessImpact,
