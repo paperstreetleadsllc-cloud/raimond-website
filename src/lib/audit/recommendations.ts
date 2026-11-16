@@ -3,6 +3,10 @@ import type { CheckResult, ReadinessScore, Recommendation } from "./types";
 interface Template {
   title: string;
   problem: string;
+  /** Used instead of `problem` when the check earned some credit. */
+  partialProblem?: string;
+  partialImplementation?: string[];
+  partialVerification?: string;
   businessImpact: string;
   action: string;
   effort: Recommendation["effort"];
@@ -166,6 +170,7 @@ const TEMPLATES: Record<string, Template> = {
   service_pages: {
     title: "Create a dedicated page for each service",
     problem: "Services are not covered by their own pages.",
+    partialProblem: "Only some services have a dedicated page among the pages we read.",
     businessImpact: "When a customer asks an AI assistant for a specific service, a page devoted to that service is far easier to match and cite than one line in a list.",
     action: "Build one page per core service with real detail.",
     effort: "High",
@@ -206,6 +211,7 @@ const TEMPLATES: Record<string, Template> = {
   name_consistent: {
     title: "Make the business name consistent",
     problem: "The business name is unclear or missing from most page titles.",
+    partialProblem: "Page titles do not use the full business name consistently.",
     businessImpact: "A consistent name across pages and listings lets systems recognize every mention as the same business.",
     action: "Use one exact business name everywhere.",
     effort: "Low",
@@ -246,11 +252,14 @@ const TEMPLATES: Record<string, Template> = {
   reviews: {
     title: "Show real customer reviews on the site",
     problem: "No review or testimonial content was detected.",
+    partialProblem: "Reviews are shown on the site, but there is no rating data in structured data for machines to read.",
     businessImpact: "Reviews are a primary signal of quality when a system decides which business to recommend.",
     action: "Display genuine customer reviews and ask recent customers for more.",
     effort: "Medium",
     implementation: ["Add a reviews section with real, attributable customer feedback.", "Link to your Google Business Profile reviews.", "Set up a simple routine for asking each completed job for a review. Never write or buy reviews."],
     verification: "Re-run this audit; review content should be detected.",
+    partialImplementation: ["Mark up the reviews already shown on the page with Review schema, matching the visible text exactly.", "Only include an aggregate rating if the page shows the same rating and count to visitors.", "Link to your Google Business Profile reviews. Never write or buy reviews."],
+    partialVerification: "Re-run this audit; review or rating data should be detected in structured data.",
     impact: 1.4,
   },
   credentials: {
@@ -339,19 +348,20 @@ function toRecommendation(check: CheckResult): Recommendation | null {
   const template = TEMPLATES[check.id];
   if (!template || check.status === "pass") return null;
   const lost = check.max - check.earned;
+  const partial = check.earned > 0;
   const weight = lost * template.impact;
   return {
     id: `rec_${check.id}`,
     checkId: check.id,
     title: template.title,
-    problem: template.problem,
+    problem: partial && template.partialProblem ? template.partialProblem : template.problem,
     evidence: check.evidence,
     businessImpact: template.businessImpact,
     action: template.action,
     effort: template.effort,
-    priority: weight >= 4 ? "High" : weight >= 1.8 ? "Medium" : "Low",
-    implementation: template.implementation,
-    verification: template.verification,
+    priority: (check.id === "server_rendered" && check.earned === 0) || weight >= 4 ? "High" : weight >= 1.8 ? "Medium" : "Low",
+    implementation: partial && template.partialImplementation ? template.partialImplementation : template.implementation,
+    verification: partial && template.partialVerification ? template.partialVerification : template.verification,
     pointsAvailable: Math.round(lost * 10) / 10,
   };
 }
@@ -362,6 +372,10 @@ export function buildRecommendations(readiness: ReadinessScore): Recommendation[
     .map((check) => ({ check, rec: toRecommendation(check) }))
     .filter((x): x is { check: CheckResult; rec: Recommendation } => x.rec !== null)
     .sort((a, b) => {
+      // An empty HTML page causes most other findings, so it always leads.
+      const emptyA = a.check.id === "server_rendered" && a.check.earned === 0;
+      const emptyB = b.check.id === "server_rendered" && b.check.earned === 0;
+      if (emptyA !== emptyB) return emptyA ? -1 : 1;
       const wa = (a.check.max - a.check.earned) * TEMPLATES[a.check.id].impact;
       const wb = (b.check.max - b.check.earned) * TEMPLATES[b.check.id].impact;
       return wb - wa;
