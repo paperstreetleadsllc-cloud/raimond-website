@@ -1,4 +1,4 @@
-import { businessSchemaItems } from "./business";
+import { businessSchemaItems, servesNationwide } from "./business";
 import { AI_CRAWLERS } from "./robots";
 import type {
   BusinessProfile,
@@ -279,8 +279,15 @@ function runChecks(crawl: CrawlResult, business: BusinessProfile): RawCheck[] {
   const cityInTitleOrH1 = primaryCity
     ? pages.filter((p) => `${p.title} ${p.h1.join(" ")}`.toLowerCase().includes(primaryCity)).length
     : 0;
-  add("location_content", "content", "Service location stated in titles and headings", !primaryCity ? 0 : cityInTitleOrH1 >= 2 ? 1 : cityInTitleOrH1 === 1 ? 0.6 : 0.3, [
-    primaryCity
+  // A business that serves a whole country should say so, not repeat its office town.
+  const coveragePages = servesNationwide(business)
+    ? pages.filter((p) => /\b(nationwide|anywhere|all 50 states|across the (country|u\.?s\.?)|coast[- ]to[- ]coast)\b/i.test(`${p.title} ${p.h1.join(" ")}`))
+    : [];
+  const locationRatio = coveragePages.length ? 1 : !primaryCity ? 0 : cityInTitleOrH1 >= 2 ? 1 : cityInTitleOrH1 === 1 ? 0.6 : 0.3;
+  add("location_content", "content", "Service location stated in titles and headings", locationRatio, [
+    coveragePages.length
+      ? `The site's structured data says it serves a whole country, and ${plural(coveragePages.length, "page")} state that coverage in the title or H1.`
+      : primaryCity
       ? `"${business.locations?.value[0]}" appears in the title or H1 of ${cityInTitleOrH1} of ${n} pages.`
       : "We could not determine a service location from the site's content or structured data.",
   ]);

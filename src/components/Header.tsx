@@ -18,6 +18,9 @@ export function Header() {
           <Link href="/#faq" className="hidden text-sm text-slate-300 hover:text-white sm:block">
             FAQ
           </Link>
+          <Link href="/guides" className="hidden text-sm text-slate-300 hover:text-white sm:block">
+            Guides
+          </Link>
           <Link href="/login" className="text-sm text-slate-300 hover:text-white">
             Log in
           </Link>

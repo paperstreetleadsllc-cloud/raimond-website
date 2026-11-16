@@ -153,3 +153,10 @@ export function detectBusiness(pages: PageData[], siteHost: string): BusinessPro
     phone: detectPhone(pages),
   };
 }
+
+const COUNTRY_WIDE = /^(united states( of america)?|usa|u\.s\.a?\.?|us|nationwide|canada|united kingdom|uk|australia)$/i;
+
+/** True when the site's own structured data says it serves a whole country. */
+export function servesNationwide(business: BusinessProfile): boolean {
+  return (business.locations?.value ?? []).some((v) => COUNTRY_WIDE.test(v.trim()));
+}

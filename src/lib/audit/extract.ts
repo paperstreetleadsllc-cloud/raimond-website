@@ -96,6 +96,9 @@ function collectSchema(value: unknown, out: SchemaItem[], depth = 0): void {
 }
 
 /** Extracts everything the audit needs from one HTML document. No network access. */
+/** A real question, not a call to action such as "Need a quote?". */
+const QUESTION_START = /^(who|what|when|where|why|how|which|can|could|do|does|did|is|are|was|should|will|would|must)\b/i;
+
 /** Hosted booking and request tools that service businesses link to instead of an on-site form. */
 const BOOKING_HOSTS: [string, string][] = [
   ["housecallpro.com", "Housecall Pro"],
@@ -198,7 +201,7 @@ export function extractPage(
   const h1 = $("h1").map((_, el) => clean($(el).text())).get().filter(Boolean).slice(0, 10);
   const h2 = $("h2").map((_, el) => clean($(el).text())).get().filter(Boolean).slice(0, 60);
   const h3 = $("h3").map((_, el) => clean($(el).text())).get().filter(Boolean).slice(0, 80);
-  const questionHeadings = [...h2, ...h3].filter((h) => h.endsWith("?") && h.length > 12).slice(0, 25);
+  const questionHeadings = [...h2, ...h3].filter((h) => h.endsWith("?") && h.length > 12 && QUESTION_START.test(h)).slice(0, 25);
 
   const imagesTotal = $("img").length;
   const imagesWithAlt = $("img").filter((_, el) => clean($(el).attr("alt")).length > 0).length;

@@ -1,3 +1,4 @@
+import { servesNationwide } from "./business";
 import { industryByKey } from "./industries";
 import type { BusinessProfile, ProviderStatus, SearchPrompt } from "./types";
 
@@ -12,8 +13,10 @@ export function generatePrompts(business: BusinessProfile): SearchPrompt[] {
   const industry = business.industry ? industryByKey(business.industry.key) : undefined;
   if (!industry) return [];
 
-  const city = business.locations?.value[0] ?? null;
-  const where = city ? `in ${city}` : "near me";
+  // Customers of a country-wide business do not ask about its office town.
+  const nationwide = servesNationwide(business);
+  const city = nationwide ? null : (business.locations?.value[0] ?? null);
+  const where = nationwide ? "in the US" : city ? `in ${city}` : "near me";
   const services = business.services.map((s) => s.name).slice(0, 3);
   const out: SearchPrompt[] = [];
   const add = (question: string, intent: SearchPrompt["intent"]) => {

@@ -171,7 +171,7 @@ const TEMPLATES: Record<string, Template> = {
   service_pages: {
     title: "Create a dedicated page for each service",
     problem: "Services are not covered by their own pages.",
-    partialProblem: "Only some services have a dedicated page among the pages we read.",
+    partialProblem: "Most services do not have a page of their own among the pages we read.",
     businessImpact: "When a customer asks an AI assistant for a specific service, a page devoted to that service is far easier to match and cite than one line in a list.",
     action: "Build one page per core service with real detail.",
     effort: "High",
