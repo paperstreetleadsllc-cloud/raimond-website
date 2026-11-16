@@ -1,67 +1,43 @@
 {
-    "name": "raimond-website",
-    "private": true,
-    "version": "0.0.1",
-    "type": "module",
-    "engines": {
-        "node": ">=20 <21"
-    },
-    "packageManager": "npm@10.8.2",
-    "workspaces": [
-        "apps/*"
-    ],
-    "scripts": {
-        "dev": "vite",
-        "dev:site": "npm run dev",
-        "dev:api": "npm run dev -w apps/aeo-api",
-        "dev:aeo": "npm run dev -w apps/aeo-web",
-        "dev:dashboard": "npm run dev -w apps/aeo-web",
-        "dev:marketing": "npm run dev -w apps/aeo-marketing",
-        "scrape": "npm run scrape -w apps/outbound-tools --",
-        "dev:all": "concurrently -k -n SITE,API,AEO -c green,blue,magenta \"npm run dev:site\" \"npm run dev:api\" \"npm run dev:aeo\"",
-        "build": "vite build && node scripts/generate-sitemap.mjs",
-        "build:aeo": "npm run build -w apps/aeo-web",
-        "build:dashboard": "npm run verify:workspaces && npm run build -w apps/aeo-web",
-        "build:marketing": "npm run verify:workspaces && npm run build -w apps/aeo-marketing",
-        "verify:workspaces": "node -e \"const fs=require('node:fs');const path=require('node:path');const cp=require('node:child_process');const pkgPath=path.join(process.cwd(),'package.json');if(!fs.existsSync(pkgPath)){console.error('[verify:workspaces] Missing package.json in current directory. Vercel is likely building the wrong root directory/repository.');process.exit(1);}let pkg;try{pkg=JSON.parse(fs.readFileSync(pkgPath,'utf8'));}catch(error){console.error('[verify:workspaces] Cannot parse package.json:',error instanceof Error?error.message:String(error));process.exit(1);}const workspaces=Array.isArray(pkg.workspaces)?pkg.workspaces:Array.isArray(pkg.workspaces?.packages)?pkg.workspaces.packages:[];if(!workspaces.includes('apps/*')){console.error('[verify:workspaces] package.json workspaces must include apps/* at repo root.');process.exit(1);}let source='npm -s workspaces list';let names=[];try{const output=cp.execSync('npm -s workspaces list',{encoding:'utf8',stdio:['ignore','pipe','pipe']});names=output.split(/\\r?\\n/).map((line)=>line.trim()).filter(Boolean).map((line)=>line.split(/\\s+/)[0]);}catch{source='npm -s ls --workspaces --json';try{const output=cp.execSync('npm -s ls --workspaces --json',{encoding:'utf8',stdio:['ignore','pipe','pipe']});const parsed=JSON.parse(output);names=Object.keys(parsed.dependencies||{});}catch(error){console.error('[verify:workspaces] Unable to list npm workspaces. Check Vercel repository + Root Directory settings.');if(error&&typeof error==='object'&&'stderr' in error&&error.stderr){console.error(String(error.stderr).trim());}process.exit(1);}}const required=['@raimond/aeo-web','@raimond/aeo-marketing'];const missing=required.filter((name)=>!names.includes(name));if(missing.length){console.error('[verify:workspaces] Missing required workspaces: '+missing.join(', '));console.error('[verify:workspaces] Vercel is likely building the wrong repo/root directory.');console.error('[verify:workspaces] Workspace listing source: '+source);console.error('[verify:workspaces] Found: '+(names.length?names.join(', '):'(none)'));process.exit(1);}console.log('[verify:workspaces] OK ('+source+')');console.log('[verify:workspaces] Found: '+names.join(', '));\"",
-        "preview": "vite preview --port 4174",
-        "lint": "eslint ./src --ext ts,tsx --max-warnings=0",
-        "typecheck": "tsc --noEmit",
-        "test": "vitest run",
-        "check": "npm run lint && npm test",
-        "test:watch": "vitest"
-    },
-    "dependencies": {
-        "@fontsource-variable/inter": "5.2.8",
-        "@fontsource/space-grotesk": "5.2.10",
-        "@supabase/supabase-js": "^2.84.0",
-        "framer-motion": "^11.3.30",
-        "lucide-react": "^0.453.0",
-        "react": "^18.3.1",
-        "react-dom": "^18.3.1",
-        "react-router-dom": "^6.26.2",
-        "resend": "6.2.2"
-    },
-    "devDependencies": {
-        "@testing-library/jest-dom": "^6.6.3",
-        "@testing-library/react": "^16.1.0",
-        "@types/node": "^20.17.6",
-        "@types/react": "^18.3.10",
-        "@types/react-dom": "^18.3.5",
-        "@typescript-eslint/eslint-plugin": "^8.12.1",
-        "@typescript-eslint/parser": "^8.12.1",
-        "@vitejs/plugin-react": "^4.7.0",
-        "autoprefixer": "^10.4.20",
-        "concurrently": "^9.2.1",
-        "eslint": "^9.14.0",
-        "eslint-plugin-react": "^7.37.2",
-        "eslint-plugin-react-hooks": "^5.0.0",
-        "globals": "^15.12.0",
-        "jsdom": "^24.1.3",
-        "postcss": "^8.4.47",
-        "tailwindcss": "^3.4.13",
-        "typescript": "~5.6.2",
-        "vite": "^7.2.2",
-        "vitest": "^4.0.10"
-    }
+  "name": "raimondai",
+  "private": true,
+  "version": "0.1.0",
+  "engines": {
+    "node": ">=20.9"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "audit:site": "tsx scripts/audit-cli.ts"
+  },
+  "dependencies": {
+    "@fontsource-variable/archivo": "^5.3.0",
+    "@fontsource/space-grotesk": "^5.3.0",
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.119.0",
+    "cheerio": "^1.2.0",
+    "next": "^16.4.6",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "server-only": "^0.0.1",
+    "stripe": "^23.1.0",
+    "undici": "^8.12.4",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.5.16",
+    "@types/node": "^22.20.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "autoprefixer": "^10.6.2",
+    "postcss": "^8.5.33",
+    "tailwindcss": "^3.4.19",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3",
+    "vitest": "^5.1.0"
+  }
 }
