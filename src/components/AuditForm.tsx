@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useId, useState, type FormEvent } from "react";
 
-export function AuditForm({ dark = false }: { dark?: boolean }) {
+export function AuditForm({ dark = false, buttonLabel = "Check my business" }: { dark?: boolean; buttonLabel?: string }) {
   const router = useRouter();
   const inputId = useId();
   const [url, setUrl] = useState("");
@@ -14,6 +14,10 @@ export function AuditForm({ dark = false }: { dark?: boolean }) {
   async function onSubmit(event: FormEvent) {
     event.preventDefault();
     if (busy) return;
+    if (!url.trim()) {
+      setError("Type your website address first, for example yourbusiness.com.");
+      return;
+    }
     setBusy(true);
     setError(null);
     try {
@@ -37,10 +41,10 @@ export function AuditForm({ dark = false }: { dark?: boolean }) {
 
   return (
     <form onSubmit={onSubmit} noValidate className="w-full">
-      <label htmlFor={inputId} className={`mb-2 block text-sm font-medium ${dark ? "text-slate-200" : "text-ink"}`}>
+      <label htmlFor={inputId} className={`mb-2 block text-[15px] font-semibold ${dark ? "text-white" : "text-ink"}`}>
         Your business website
       </label>
-      <div className="flex flex-col gap-3 sm:flex-row">
+      <div className={`flex flex-col gap-2 rounded-[22px] border p-2 sm:flex-row ${dark ? "border-white/20 bg-white/10" : "border-line bg-white shadow-card"}`}>
         <input
           id={inputId}
           name="url"
@@ -55,7 +59,7 @@ export function AuditForm({ dark = false }: { dark?: boolean }) {
           onChange={(e) => setUrl(e.target.value)}
           aria-describedby={error ? `${inputId}-error` : undefined}
           aria-invalid={error ? true : undefined}
-          className="min-w-0 flex-1 rounded-xl border border-slate-300 bg-white px-4 py-3 text-base text-ink placeholder:text-slate-400"
+          className="min-w-0 flex-1 rounded-2xl border border-transparent bg-white px-4 py-3.5 text-lg text-ink placeholder:text-slate-400 focus:border-teal-ink"
         />
         {/* Honeypot: hidden from people and assistive technology. */}
         <div aria-hidden="true" className="absolute left-[-9999px] h-0 w-0 overflow-hidden">
@@ -64,8 +68,8 @@ export function AuditForm({ dark = false }: { dark?: boolean }) {
             <input tabIndex={-1} autoComplete="off" name="company_website" value={trap} onChange={(e) => setTrap(e.target.value)} />
           </label>
         </div>
-        <button type="submit" disabled={busy || !url.trim()} className="btn-primary whitespace-nowrap !text-base">
-          {busy ? "Starting…" : "Check my AI visibility"}
+        <button type="submit" disabled={busy} className={`btn-primary whitespace-nowrap !rounded-2xl !px-7 !py-3.5 !text-base ${dark ? "!bg-teal-brand !text-ink hover:!bg-[#6ff6e9]" : ""}`}>
+          {busy ? "Starting…" : buttonLabel}
         </button>
       </div>
       {error ? (
@@ -73,8 +77,8 @@ export function AuditForm({ dark = false }: { dark?: boolean }) {
           {error}
         </p>
       ) : (
-        <p className={`mt-3 text-sm ${dark ? "text-slate-400" : "text-slate-500"}`}>
-          Free. No account needed. Usually takes under a minute.
+        <p className={`mt-3 text-sm ${dark ? "text-slate-300" : "text-muted"}`}>
+          Free. No account or credit card. Usually takes under a minute.
         </p>
       )}
     </form>

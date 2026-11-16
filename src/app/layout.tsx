@@ -1,7 +1,4 @@
-import "@fontsource-variable/inter";
-import "@fontsource/space-grotesk/500.css";
-import "@fontsource/space-grotesk/600.css";
-import "@fontsource/space-grotesk/700.css";
+import "@fontsource-variable/archivo/wdth.css";
 import "./globals.css";
 
 import type { Metadata, Viewport } from "next";
@@ -11,15 +8,15 @@ import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
-  title: { default: "RAimondAI | Is AI recommending your competitors instead of you?", template: "%s | RAimondAI" },
+  title: { default: "RAimondAI | Get your business recommended by AI search", template: "%s | RAimondAI" },
   description: SITE.description,
   alternates: { canonical: "/" },
-  openGraph: { type: "website", siteName: SITE.name, title: "Is AI recommending your competitors instead of you?", description: SITE.description, url: SITE.url },
+  openGraph: { type: "website", siteName: SITE.name, title: "When customers ask AI who to call, does it say your name?", description: SITE.description, url: SITE.url },
   twitter: { card: "summary", title: "RAimondAI", description: SITE.description },
   icons: { icon: "/favicon.svg" },
 };
 
-export const viewport: Viewport = { themeColor: "#0b1121", width: "device-width", initialScale: 1 };
+export const viewport: Viewport = { themeColor: "#FFFFFF", width: "device-width", initialScale: 1 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
