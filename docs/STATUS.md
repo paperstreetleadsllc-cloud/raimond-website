@@ -4,7 +4,7 @@ Updated 2026-11-16. Read this first in any new working session.
 
 ## Where things live
 
-- **Repo:** `paperstreetleadsllc-cloud/raimond-website` (public). Work happens on `feat/supabase-auth-billing` (PR #4 into `feat/aeo-platform`). `main` is the old site and is untouched. Never push to `main`.
+- **Repo:** `paperstreetleadsllc-cloud/raimond-website` (public). Work happens on `feat/supabase-auth-billing` (PR #4 into `feat/aeo-platform`). Guide content is written on `content/guides`, branched from `feat/supabase-auth-billing`. `main` is the old site and is untouched. Never push to `main`.
 - **Hosting:** Vercel team `paperstreetleadsllc-cloud`, project `raimond-website`. Production serves raimondai.com from `main`. Preview: `https://raimond-website-git-2242af-paperstreetleadsllc-clouds-projects.vercel.app`.
 - **Database and sign-in:** Supabase project `wrgmcgbuodrqdsxjmixv` (org RAimond).
 - **Payments:** Stripe sandbox, account "RAimondAi.com". Test mode only.
@@ -22,7 +22,7 @@ Updated 2026-11-16. Read this first in any new working session.
 - Sign-up, login, reset (Supabase Auth). Code complete; not yet tested end to end on the preview.
 - Stripe subscriptions keyed to the Supabase user id: checkout, portal, verified webhooks. Sandbox has three products, a portal and a webhook. Not yet walked through.
 - Saved audits on the dashboard (code complete; needs migration `0003_user_audits.sql` applied).
-- Three guides, `llms.txt`, sitemap.
+- Four guides, `llms.txt`, sitemap. Fourth guide, "How do I check if ChatGPT recommends my business?", is on branch `content/guides` (not merged). Facts about ChatGPT memory, location and temporary chat were checked against OpenAI's help pages on 2026-11-16.
 
 ## Waiting on Drew
 
@@ -33,6 +33,8 @@ Updated 2026-11-16. Read this first in any new working session.
 5. Back up uncommitted February changes on his PC (`C:\Users\drews\Documents\raimond-website`).
 6. Approve or change the $25 pilot cap for measuring AI visibility; create Perplexity and OpenAI API accounts.
 7. Launch decisions listed in `MARKETING_PLAN.md`.
+8. Review the new ChatGPT guide on `content/guides` and approve merging it into `feat/supabase-auth-billing`.
+9. Decide the named author for guides (currently a RAimondAI company byline).
 
 ## Before the free-audit launch
 

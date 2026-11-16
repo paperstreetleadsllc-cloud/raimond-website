@@ -195,6 +195,84 @@ export const GUIDES: Guide[] = [
       },
     ],
   },
+  {
+    slug: "how-to-check-if-chatgpt-recommends-your-business",
+    title: "How do I check if ChatGPT recommends my business?",
+    description:
+      "A step-by-step way for a local business owner to check whether ChatGPT mentions, recommends, or cites their business, and how to read the results honestly.",
+    updated: "2026-11-16",
+    intro:
+      "The only way to know whether ChatGPT recommends your business is to ask it the questions your customers ask and write down what it says. This guide shows how to do that so the results mean something.",
+    sections: [
+      {
+        question: "How do I check if ChatGPT recommends my business?",
+        answer: [
+          "Ask ChatGPT the questions a new customer would ask, such as \"Who is the best plumber in Tampa, FL?\", in a chat that is not personalized to you. Then record whether your business was mentioned, recommended, or linked as a source. Repeat the same questions on a schedule, because one answer on one day is a sample, not a verdict.",
+        ],
+      },
+      {
+        question: "Why can't I just ask ChatGPT about my business by name?",
+        answer: [
+          "Because customers rarely do. Asking \"What do you know about Smith Plumbing?\" tells you whether ChatGPT can find your business when given its name. It does not tell you whether ChatGPT suggests you to someone who only asked for a plumber. Both are worth knowing, but the second is the one that brings new customers.",
+        ],
+      },
+      {
+        question: "Why might ChatGPT show me different answers than my customers see?",
+        answer: [
+          "ChatGPT can tailor answers to the person asking. If you have used it to talk about your own business, it may remember that and lean toward you. OpenAI's help pages say saved memories can be used when ChatGPT rewrites a search, and that it uses an approximate location based on your IP address to find local results.",
+          "So a check from your own account, at your own shop, is the least reliable version of the test.",
+        ],
+      },
+      {
+        question: "How do I run a fair check?",
+        answer: ["Remove as much of yourself from the test as you can, and keep the conditions the same each time."],
+        list: [
+          "Use a temporary chat and choose the unpersonalized option before the first message, or use ChatGPT while signed out. OpenAI says people who are not signed in can still use web search.",
+          "Put the city or area in the question, so the answer does not depend on where you happen to be.",
+          "Make sure the answer used web search. Answers that searched the web usually show sources you can open.",
+          "Write ten questions customers really ask, including at least one for each main service.",
+          "Ask each question the same way every time, and keep the exact wording in a list.",
+        ],
+      },
+      {
+        question: "What should I write down for each question?",
+        answer: ["Record the same few things every time, so you can compare one month with the next."],
+        list: [
+          "The date, the exact question, and whether you were signed in.",
+          "Whether your business was named at all.",
+          "Whether it was recommended, or only mentioned in a list.",
+          "Whether a page from your website was cited as a source.",
+          "Which competitors were named instead.",
+          "Anything ChatGPT said about you that was wrong, such as an old phone number or a service you do not offer.",
+        ],
+      },
+      {
+        question: "Why do I get a different answer when I ask again?",
+        answer: [
+          "AI products write each answer fresh, and the web pages they find can change, so the same question can produce a different list on a different day. That is why one check proves little. A pattern over several weeks, across ten questions, is far more useful than any single reply.",
+        ],
+      },
+      {
+        question: "What if ChatGPT never mentions my business?",
+        answer: [
+          "Start with the things that stop ChatGPT from using your site at all. OpenAI says there is no way to guarantee top placement, and that being included depends on allowing its search crawler, OAI-SearchBot, to reach your site. After that, the usual gaps are text that only appears after JavaScript runs, no structured data describing the business, and service pages that never say plainly what you do and where.",
+          "Fix the gaps, give it a few weeks, then run the same ten questions again.",
+        ],
+      },
+      {
+        question: "Does this tell me how I do in other AI products?",
+        answer: [
+          "No. Google's AI Overviews, Perplexity, Microsoft Copilot, and Claude each find and choose sources in their own way. A business can appear in one and not another, so each product has to be checked separately with the same questions.",
+        ],
+      },
+      {
+        question: "Is there a faster way to see what might be holding me back?",
+        answer: [
+          "The free RAimondAI audit checks the website side: whether OAI-SearchBot and other AI crawlers are allowed, how much text they actually receive, and whether your structured data and service pages give them what they need. It does not ask ChatGPT about you, so it cannot tell you whether you are being recommended. It shows what to fix so that you have a better chance.",
+        ],
+      },
+    ],
+  },
 ];
 
 export function guideBySlug(slug: string): Guide | undefined {

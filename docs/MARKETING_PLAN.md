@@ -21,7 +21,7 @@ Status: draft for Drew's review, 2026-11-15. Nothing in this plan has been publi
 |---|---|
 | Server-rendered pages with text in the HTML | Built |
 | Organization, FAQ, Article and Breadcrumb structured data | Built |
-| Three question-and-answer guides under `/guides` | Built |
+| Question-and-answer guides under `/guides` | Three built; a fourth awaiting review |
 | Sitemap, robots.txt, `llms.txt` | Built |
 | Free audit that works without an account | Built, tested on real sites |
 
@@ -41,7 +41,7 @@ Status: draft for Drew's review, 2026-11-15. Nothing in this plan has been publi
 
 ## Phase 3: content engine (weekly, free)
 
-- **One guide a week**, each answering one question a business owner asks. Next candidates: "How do I check if ChatGPT recommends my business?", "What schema does a plumber need?", "robots.txt for AI crawlers: what to allow".
+- **One guide a week**, each answering one question a business owner asks. Written: "How do I check if ChatGPT recommends my business?" (2026-11-16, branch `content/guides`, awaiting review). Next candidates: "What schema does a plumber need?", "robots.txt for AI crawlers: what to allow".
 - **Industry pages**, one per trade, built from real audit findings rather than templates. Start with plumbing, roofing, HVAC.
 - **Original data.** After 100 or more audits, publish aggregate findings (for example, the share of sites with no business schema). Original numbers are what other sites and AI answers cite. Only publish what the data supports.
 
