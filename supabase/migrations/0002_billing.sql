@@ -22,7 +22,7 @@ create table if not exists public.billing_customers (
 comment on table public.billing_customers is
   'Maps a Supabase auth user to a Stripe customer and its subscription state. Written only by trusted server code.';
 
-create or replace function public.set_updated_at()
+create or replace function public.billing_set_updated_at()
 returns trigger
 language plpgsql
 set search_path = ''
@@ -36,7 +36,7 @@ $$;
 drop trigger if exists billing_customers_set_updated_at on public.billing_customers;
 create trigger billing_customers_set_updated_at
   before update on public.billing_customers
-  for each row execute function public.set_updated_at();
+  for each row execute function public.billing_set_updated_at();
 
 -- Stripe webhook deliveries, keyed by Stripe's event id, for idempotency.
 create table if not exists public.stripe_webhook_events (
