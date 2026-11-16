@@ -96,6 +96,28 @@ function collectSchema(value: unknown, out: SchemaItem[], depth = 0): void {
 }
 
 /** Extracts everything the audit needs from one HTML document. No network access. */
+/** A real question, not a call to action such as "Need a quote?". */
+const QUESTION_START = /^(who|what|when|where|why|how|which|can|could|do|does|did|is|are|was|should|will|would|must)\b/i;
+
+/** Hosted booking and request tools that service businesses link to instead of an on-site form. */
+const BOOKING_HOSTS: [string, string][] = [
+  ["housecallpro.com", "Housecall Pro"],
+  ["servicetitan.com", "ServiceTitan"],
+  ["getjobber.com", "Jobber"],
+  ["calendly.com", "Calendly"],
+  ["acuityscheduling.com", "Acuity Scheduling"],
+  ["squareup.com", "Square Appointments"],
+  ["square.site", "Square Appointments"],
+  ["schedulista.com", "Schedulista"],
+  ["setmore.com", "Setmore"],
+  ["zocdoc.com", "Zocdoc"],
+  ["vagaro.com", "Vagaro"],
+  ["booksy.com", "Booksy"],
+  ["opentable.com", "OpenTable"],
+  ["fieldpulse.com", "FieldPulse"],
+  ["workiz.com", "Workiz"],
+];
+
 export function extractPage(
   url: string,
   html: string,
@@ -136,6 +158,7 @@ export function extractPage(
   const phones = new Set<string>();
   const emails = new Set<string>();
   let externalLinkCount = 0;
+  let bookingProvider: string | null = null;
   let hasTelLink = false;
   let hasPrivacyLink = false;
 
@@ -170,13 +193,15 @@ export function extractPage(
       externalLinkCount++;
       const full = `${abs.hostname.replace(/^www\./, "")}${abs.pathname}`;
       if (SOCIAL_HOSTS.some((h) => full.includes(h))) socialLinks.add(abs.toString());
+      const booking = BOOKING_HOSTS.find(([h]) => abs.hostname === h || abs.hostname.endsWith(`.${h}`));
+      if (booking && !bookingProvider) bookingProvider = booking[1];
     }
   });
 
   const h1 = $("h1").map((_, el) => clean($(el).text())).get().filter(Boolean).slice(0, 10);
   const h2 = $("h2").map((_, el) => clean($(el).text())).get().filter(Boolean).slice(0, 60);
   const h3 = $("h3").map((_, el) => clean($(el).text())).get().filter(Boolean).slice(0, 80);
-  const questionHeadings = [...h2, ...h3].filter((h) => h.endsWith("?") && h.length > 12).slice(0, 25);
+  const questionHeadings = [...h2, ...h3].filter((h) => h.endsWith("?") && h.length > 12 && QUESTION_START.test(h)).slice(0, 25);
 
   const imagesTotal = $("img").length;
   const imagesWithAlt = $("img").filter((_, el) => clean($(el).attr("alt")).length > 0).length;
@@ -241,6 +266,7 @@ export function extractPage(
     emails: [...emails].slice(0, 5),
     hasTelLink,
     hasForm,
+    bookingProvider,
     hasPrivacyLink,
     imagesTotal,
     imagesWithAlt,

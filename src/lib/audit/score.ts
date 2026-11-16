@@ -1,4 +1,4 @@
-import { businessSchemaItems } from "./business";
+import { businessSchemaItems, servesNationwide } from "./business";
 import { AI_CRAWLERS } from "./robots";
 import type {
   BusinessProfile,
@@ -9,6 +9,29 @@ import type {
   PageData,
   ReadinessScore,
 } from "./types";
+
+
+const LOCATION_PATH = /\/(service-areas?|areas?-we-serve|areas?|locations?|cities|where-we-serve)(\/|$)/i;
+
+const NAME_FILLER = new Set([
+  "llc", "inc", "incorporated", "co", "corp", "corporation", "company", "ltd", "pllc", "pc", "the", "and", "of",
+  "services", "service", "solutions", "group", "plumbing", "plumbers", "roofing", "roofers", "hvac", "heating",
+  "cooling", "air", "conditioning", "electric", "electrical", "electricians", "landscaping", "lawn", "care",
+  "construction", "contracting", "contractors", "remodeling", "painting", "cleaning", "restoration", "flooring",
+  "dental", "dentistry", "law", "firm", "auto", "repair", "pest", "control",
+]);
+
+/** The distinctive part of a business name, lower-cased; empty if nothing distinctive remains. */
+export function coreBusinessName(name: string): string {
+  const words = name.toLowerCase().replace(/[^a-z0-9&' -]/g, " ").split(/\s+/).filter(Boolean);
+  const core = words.filter((w) => !NAME_FILLER.has(w));
+  const joined = core.join(" ");
+  return joined.length >= 4 ? joined : "";
+}
+
+function plural(count: number, noun: string): string {
+  return `${count} ${noun}${count === 1 ? "" : "s"}`;
+}
 
 /**
  * Scoring configuration. Category weights are the product's initial
@@ -224,6 +247,8 @@ function runChecks(crawl: CrawlResult, business: BusinessProfile): RawCheck[] {
   ]);
 
   const servicePagesFound = pages.slice(1).filter((p) => {
+    // A city or service-area page is about a place, not a single service.
+    if (LOCATION_PATH.test(new URL(p.url).pathname)) return false;
     const hay = `${p.url} ${p.title} ${p.h1.join(" ")}`.toLowerCase().replace(/[-_/]/g, " ");
     return business.services.some((s) => hay.includes(s.name)) || /\b(repair|installation|replacement|maintenance)\b/.test(hay);
   });
@@ -235,10 +260,10 @@ function runChecks(crawl: CrawlResult, business: BusinessProfile): RawCheck[] {
     servicePagesFound.length >= 3 ? 1 : servicePagesFound.length >= 1 ? 0.6 : serviceHub ? 0.3 : 0,
     [
       servicePagesFound.length
-        ? `${servicePagesFound.length} dedicated service page(s) among the ${n} pages analyzed: ${listPages(servicePagesFound)}.`
+        ? `${plural(servicePagesFound.length, "dedicated service page")} among the ${plural(n, "page")} analyzed: ${listPages(servicePagesFound)}.`
         : serviceHub
           ? "A general services page exists, but we found no pages dedicated to a single service among the pages analyzed."
-          : `No dedicated service pages found among the ${n} pages analyzed.`,
+          : `No dedicated service pages found among the ${plural(n, "page")} analyzed.`,
     ],
   );
 
@@ -254,8 +279,15 @@ function runChecks(crawl: CrawlResult, business: BusinessProfile): RawCheck[] {
   const cityInTitleOrH1 = primaryCity
     ? pages.filter((p) => `${p.title} ${p.h1.join(" ")}`.toLowerCase().includes(primaryCity)).length
     : 0;
-  add("location_content", "content", "Service location stated in titles and headings", !primaryCity ? 0 : cityInTitleOrH1 >= 2 ? 1 : cityInTitleOrH1 === 1 ? 0.6 : 0.3, [
-    primaryCity
+  // A business that serves a whole country should say so, not repeat its office town.
+  const coveragePages = servesNationwide(business)
+    ? pages.filter((p) => /\b(nationwide|anywhere|all 50 states|across the (country|u\.?s\.?)|coast[- ]to[- ]coast)\b/i.test(`${p.title} ${p.h1.join(" ")}`))
+    : [];
+  const locationRatio = coveragePages.length ? 1 : !primaryCity ? 0 : cityInTitleOrH1 >= 2 ? 1 : cityInTitleOrH1 === 1 ? 0.6 : 0.3;
+  add("location_content", "content", "Service location stated in titles and headings", locationRatio, [
+    coveragePages.length
+      ? `The site's structured data says it serves a whole country, and ${plural(coveragePages.length, "page")} state that coverage in the title or H1.`
+      : primaryCity
       ? `"${business.locations?.value[0]}" appears in the title or H1 of ${cityInTitleOrH1} of ${n} pages.`
       : "We could not determine a service location from the site's content or structured data.",
   ]);
@@ -270,9 +302,23 @@ function runChecks(crawl: CrawlResult, business: BusinessProfile): RawCheck[] {
   // ---- Business identity consistency ------------------------------------
   const name = business.name?.value ?? "";
   const nameInTitles = name ? pages.filter((p) => p.title.toLowerCase().includes(name.toLowerCase())).length : 0;
-  add("name_consistent", "identity", "Business name is clear and consistent", !name ? 0 : pct(nameInTitles, n) >= 0.5 ? 1 : nameInTitles > 0 ? 0.6 : 0.4, [
+  // Sites often shorten the name in titles ("Flow Pros" for "Flow Pros Plumbing").
+  const shortName = coreBusinessName(name);
+  const shortInTitles =
+    shortName && shortName !== name.toLowerCase() ? pages.filter((p) => p.title.toLowerCase().includes(shortName)).length : 0;
+  const nameRatio = !name
+    ? 0
+    : pct(nameInTitles, n) >= 0.5
+      ? 1
+      : pct(shortInTitles, n) >= 0.5
+        ? 0.8
+        : nameInTitles > 0 || shortInTitles > 0
+          ? 0.6
+          : 0.4;
+  add("name_consistent", "identity", "Business name is clear and consistent", nameRatio, [
     name
-      ? `Business name "${name}" identified from ${business.name?.source}; it appears in ${nameInTitles} of ${n} page titles.`
+      ? `Business name "${name}" identified from ${business.name?.source}; the full name appears in ${nameInTitles} of ${plural(n, "page title")}.` +
+        (shortInTitles > nameInTitles ? ` A shorter form, "${shortName}", appears in ${shortInTitles}.` : "")
       : "We could not identify a business name from structured data, the og:site_name tag, or the homepage title.",
   ]);
 
@@ -304,8 +350,10 @@ function runChecks(crawl: CrawlResult, business: BusinessProfile): RawCheck[] {
 
   const anyEmail = pages.some((p) => p.emails.length > 0);
   const anyForm = pages.some((p) => p.hasForm);
-  add("contact_method", "identity", "Email or contact form available", anyForm && anyEmail ? 1 : anyForm || anyEmail ? 0.7 : 0, [
-    `Contact form found: ${anyForm ? "yes" : "no"}. Email address link found: ${anyEmail ? "yes" : "no"}.`,
+  const booking = pages.find((p) => p.bookingProvider)?.bookingProvider ?? null;
+  const writtenWays = Number(anyForm || Boolean(booking)) + Number(anyEmail);
+  add("contact_method", "identity", "Email, contact form or online booking available", writtenWays === 2 ? 1 : writtenWays === 1 ? 0.7 : 0, [
+    `Contact form found: ${anyForm ? "yes" : "no"}. Online booking link found: ${booking ? `yes (${booking})` : "no"}. Email address link found: ${anyEmail ? "yes" : "no"}.`,
   ]);
 
   // ---- Trust and credibility --------------------------------------------

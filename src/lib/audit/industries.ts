@@ -107,6 +107,15 @@ export const INDUSTRIES: Industry[] = [
     urgent: false,
   },
   {
+    key: "auto_transport",
+    label: "Vehicle shipping",
+    noun: "car shipping company",
+    schemaTypes: [],
+    keywords: ["auto transport", "car shipping", "vehicle shipping", "vehicle transport", "car transport", "ship your car", "car hauler", "auto shipping"],
+    services: ["open transport", "enclosed transport", "door-to-door transport", "cross-country car shipping", "classic car transport", "motorcycle shipping", "snowbird car shipping", "dealer transport", "expedited shipping", "heavy equipment transport"],
+    urgent: false,
+  },
+  {
     key: "auto_repair",
     label: "Auto repair",
     noun: "auto repair shop",

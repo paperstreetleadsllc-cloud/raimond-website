@@ -55,6 +55,42 @@ function scoreCandidate(url: URL, text: string): number {
   return score;
 }
 
+/** Most pages one section of a site (e.g. /service-area/) may take in the first pass. */
+const MAX_PER_SECTION = 3;
+
+function sectionOf(url: string): string {
+  const parts = new URL(url).pathname.split("/").filter(Boolean);
+  // A top-level page is its own section; nested pages group under their first folder.
+  return parts.length > 1 ? parts[0].toLowerCase() : `/${(parts[0] ?? "").toLowerCase()}`;
+}
+
+/**
+ * Take the highest-scoring pages, but stop any single section from crowding out
+ * the rest. A site with 40 city pages should still have its services, about and
+ * contact pages read. Leftover slots are filled by score.
+ */
+export function pickDiverse<T extends { url: string; score: number }>(sorted: T[], max: number): T[] {
+  const picked: T[] = [];
+  const overflow: T[] = [];
+  const perSection = new Map<string, number>();
+  for (const c of sorted) {
+    if (picked.length >= max) break;
+    const section = sectionOf(c.url);
+    const used = perSection.get(section) ?? 0;
+    if (used >= MAX_PER_SECTION) {
+      overflow.push(c);
+      continue;
+    }
+    perSection.set(section, used + 1);
+    picked.push(c);
+  }
+  for (const c of overflow) {
+    if (picked.length >= max) break;
+    picked.push(c);
+  }
+  return picked;
+}
+
 function canonicalKey(u: URL): string {
   const path = u.pathname.replace(/\/+$/, "") || "/";
   return `${u.hostname.replace(/^www\./, "")}${path}${u.search}`.toLowerCase();
@@ -238,7 +274,10 @@ export async function crawlSite(options: CrawlOptions): Promise<CrawlResult> {
   for (const link of homePage.internalLinks) consider(link.href, link.text, 3);
   for (const u of sitemapUrls.slice(0, 500)) consider(u, "", 0);
 
-  const chosen = candidates.sort((a, b) => b.score - a.score).slice(0, limits.maxPages - 1);
+  const chosen = pickDiverse(
+    candidates.sort((a, b) => b.score - a.score),
+    limits.maxPages - 1,
+  );
   pagesPlanned = 1 + chosen.length;
   await report("crawl");
 

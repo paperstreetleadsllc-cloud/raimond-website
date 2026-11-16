@@ -108,4 +108,24 @@ export class SupabaseStore implements AuditStore {
     }, { onConflict: "audit_id,email", ignoreDuplicates: true });
     if (error) throw new Error(`saveLead failed: ${error.message}`);
   }
+
+  async saveUserAudit(userId: string, auditId: string) {
+    const { error } = await this.db
+      .from("user_audits")
+      .upsert({ user_id: userId, audit_id: auditId }, { onConflict: "user_id,audit_id", ignoreDuplicates: true });
+    if (error) throw new Error(`saveUserAudit failed: ${error.message}`);
+  }
+
+  async listUserAudits(userId: string, limit: number) {
+    const { data, error } = await this.db
+      .from("user_audits")
+      .select("created_at, audits(*)")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: false })
+      .limit(limit);
+    if (error) throw new Error(`listUserAudits failed: ${error.message}`);
+    return ((data ?? []) as unknown as { audits: Row | null }[])
+      .filter((r) => r.audits)
+      .map((r) => toRecord(r.audits as Row));
+  }
 }

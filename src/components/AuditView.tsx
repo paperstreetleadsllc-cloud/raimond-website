@@ -319,7 +319,7 @@ export function Report({ audit }: { audit: PublicAudit }) {
         {/* Pages */}
         <section className="card p-6 sm:p-8" aria-labelledby="pages">
           <h2 id="pages" className="text-2xl font-semibold">Pages we read</h2>
-          <p className="mt-1 text-slate-600">{r.stats.pagesAnalyzed} pages, {r.stats.requests} requests, completed in {(r.stats.durationMs / 1000).toFixed(1)} seconds. The free snapshot reads up to 10 pages.</p>
+          <p className="mt-1 text-slate-600">{r.stats.pagesAnalyzed} {r.stats.pagesAnalyzed === 1 ? "page" : "pages"}, {r.stats.requests} requests, completed in {(r.stats.durationMs / 1000).toFixed(1)} seconds. The free snapshot reads up to 10 pages.</p>
           <div className="mt-5 overflow-x-auto">
             <table className="w-full min-w-[40rem] text-left text-sm">
               <thead className="text-slate-500">

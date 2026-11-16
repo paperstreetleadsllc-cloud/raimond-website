@@ -2,7 +2,8 @@ import { after, NextResponse, type NextRequest } from "next/server";
 import { z } from "zod";
 import { AuditError } from "@/lib/audit/types";
 import { clientIp, sameOrigin } from "@/lib/http";
-import { processAudit, RateLimitError, requestAudit } from "@/lib/service";
+import { getVerifiedUser } from "@/lib/auth";
+import { processAudit, RateLimitError, requestAudit, saveAuditForUser } from "@/lib/service";
 import { StoreNotConfiguredError } from "@/lib/store";
 
 export const runtime = "nodejs";
@@ -30,6 +31,10 @@ export async function POST(req: NextRequest) {
   try {
     const { audit, reused } = await requestAudit(parsed.data.url, clientIp(req));
     if (!reused) after(() => processAudit(audit.id));
+    // Signed-in visitors get the audit saved to their dashboard. The id comes
+    // from the verified session; nothing in the request body is trusted for it.
+    const user = await getVerifiedUser().catch(() => null);
+    if (user) await saveAuditForUser(user.id, audit.id);
     return NextResponse.json({ id: audit.id, reused }, { status: 202 });
   } catch (err) {
     if (err instanceof AuditError) return NextResponse.json({ error: err.message, code: err.code }, { status: 400 });
